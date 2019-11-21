@@ -69,13 +69,24 @@ def test_profile():
 
 def test_api():
     root_url = "http://localhost:5600/api/"
-    assert requests.get(root_url + "0/buckets").ok
+    try:
+        r = requests.get(root_url + "0/buckets")
+    except requests.exceptions.RequestException as e:
+        print(e)
+        assert False
+    assert r.ok
+
     bucket = [item for item in requests.get(root_url + "0/buckets").json()
               if 'aw-watcher-window' in item][0]
 
     # get today's history
     history_url = root_url + f"0/buckets/{bucket}/events"
-    assert requests.get(history_url).ok
+    try:
+        r = requests.get(history_url)
+    except requests.exceptions.RequestException as e:
+        print(e)
+        assert False
+    assert r.ok
 
 # test that delete happens when app closes
 # ensure that limit turns off on new day
