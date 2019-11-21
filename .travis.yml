@@ -26,5 +26,5 @@ deploy:
     secure: PLEASE_REPLACE_ME
   on:
     tags: true
-    repo: j718/linux_screentime
+    repo: j718/screentime
     python: 3.8

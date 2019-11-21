@@ -6,6 +6,9 @@ verify_ssl = true
 [dev-packages]
 ipykernel = "*"
 jupyter = "*"
+flake8 = "*"
+tox = "*"
+pytest = "*"
 
 [packages]
 click = "*"

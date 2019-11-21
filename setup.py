@@ -11,11 +11,11 @@ with open('README.rst') as readme_file:
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
-requirements = ['Click>=7.0', ]
+requirements = ['Click>=7.0', "click", "requests", "pandas", "pyyaml"]
 
-setup_requirements = [ ]
+setup_requirements = []
 
-test_requirements = [ ]
+test_requirements = []
 
 setup(
     author="Jacob Clarke",
@@ -37,20 +37,20 @@ setup(
     description="A project to limit screentime relying on activity watcher",
     entry_points={
         'console_scripts': [
-            'linux_screentime=linux_screentime.cli:main',
+            'screentime=screentime.cli:main',
         ],
     },
     install_requires=requirements,
     license="MIT license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
-    keywords='linux_screentime',
-    name='linux_screentime',
-    packages=find_packages(include=['linux_screentime', 'linux_screentime.*']),
+    keywords='screentime',
+    name='screentime',
+    packages=find_packages(include=['screentime', 'screentime.*']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/j718/linux_screentime',
+    url='https://github.com/j718/screentime',
     version='0.1.0',
     zip_safe=False,
 )

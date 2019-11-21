@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=.
 set BUILDDIR=_build
-set SPHINXPROJ=linux_screentime
+set SPHINXPROJ=screentime
 
 if "%1" == "" goto help
 

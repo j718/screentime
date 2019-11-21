@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 
-"""Console script for linux_screentime."""
+"""Console script for screentime."""
 import sys
 import click
-from linux_screentime import linux_screentime
+from screentime.app import Screentime
 
 
 @click.command()
 def main(args=None):
-    """Console script for linux_screentime."""
-    linux_screentime.main()
-
+    """Console script for screentime."""
+    app = Screentime()
+    app.apply_limits()
     return 0
 
 

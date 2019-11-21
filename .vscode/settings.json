@@ -1,3 +1,10 @@
 {
-    "python.pythonPath": "/home/jacob/.local/share/virtualenvs/linux_screentime-ldar_RAw/bin/python"
+    "cSpell.enabled": false,
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.pythonPath": "/home/jacob/.local/share/virtualenvs/screentime-AwHGI-cg/bin/python"
 }

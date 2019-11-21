@@ -3,11 +3,11 @@ linux-screentime
 ================
 
 
-.. image:: https://img.shields.io/pypi/v/linux_screentime.svg
-        :target: https://pypi.python.org/pypi/linux_screentime
+.. image:: https://img.shields.io/pypi/v/screentime.svg
+        :target: https://pypi.python.org/pypi/screentime
 
-.. image:: https://img.shields.io/travis/j718/linux_screentime.svg
-        :target: https://travis-ci.org/j718/linux_screentime
+.. image:: https://img.shields.io/travis/j718/screentime.svg
+        :target: https://travis-ci.org/j718/screentime
 
 .. image:: https://readthedocs.org/projects/linux-screentime/badge/?version=latest
         :target: https://linux-screentime.readthedocs.io/en/latest/?badge=latest
