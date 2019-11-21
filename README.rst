@@ -1,0 +1,37 @@
+================
+linux-screentime
+================
+
+
+.. image:: https://img.shields.io/pypi/v/linux_screentime.svg
+        :target: https://pypi.python.org/pypi/linux_screentime
+
+.. image:: https://img.shields.io/travis/j718/linux_screentime.svg
+        :target: https://travis-ci.org/j718/linux_screentime
+
+.. image:: https://readthedocs.org/projects/linux-screentime/badge/?version=latest
+        :target: https://linux-screentime.readthedocs.io/en/latest/?badge=latest
+        :alt: Documentation Status
+
+
+
+
+A project to limit screentime relying on activity watcher
+
+
+* Free software: MIT license
+* Documentation: https://linux-screentime.readthedocs.io.
+
+
+Features
+--------
+
+* TODO
+
+Credits
+-------
+
+This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
+
+.. _Cookiecutter: https://github.com/audreyr/cookiecutter
+.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
