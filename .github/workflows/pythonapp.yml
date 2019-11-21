@@ -25,7 +25,7 @@ jobs:
              | cut -d '"' -f 4 \
              | wget -qi -
         unzip activitywatch*
-        ./activitywatch/aw-qt
+        ./activitywatch/aw-server/aw-server
     - name: Test with pytest
       env:
         XDG_DATA_DIRS: none
