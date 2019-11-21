@@ -19,7 +19,7 @@ jobs:
         pip install tox
     - name: Install activitywatch
       run: |
-        curl -s https://api.github.com/repos/ActivityWatch/activitywatch/releases/latest \
+        curl https://api.github.com/repos/ActivityWatch/activitywatch/releases/latest \
              grep browser_download_url \
              grep linux \
              cut -d '"' -f 4 \
