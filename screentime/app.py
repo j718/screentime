@@ -22,9 +22,6 @@ xdg_path = [Path(x) for x in os.environ['XDG_DATA_DIRS'].split(':')]
 MODULE_NAME = 'screentime'
 HOME = Path(os.environ['HOME'])
 home_dir = Path(HOME / '.config' / MODULE_NAME)
-share_dir = home_dir / 'share'
-bin_dir = home_dir / 'bin'
-app_dir = share_dir / 'applications'
 log_path = (home_dir / 'log.txt')
 
 
@@ -32,11 +29,6 @@ class Screentime():
     def __init__(self):
         self.MODULE_NAME = MODULE_NAME
         # create config folder
-        shutil.rmtree(app_dir, ignore_errors=True)
-        app_dir.mkdir(parents=True, exist_ok=True)
-
-        shutil.rmtree(bin_dir, ignore_errors=True)
-        bin_dir.mkdir(parents=True, exist_ok=True)
 
         self.logger = self.setup_custom_logger(MODULE_NAME)
 
@@ -55,32 +47,6 @@ class Screentime():
         df.id = df.id.str.lower()
         df["blocked"] = False
         self.config = df
-
-        # find the profile folder
-        profile_paths = [
-            Path("/etc/.profile"),
-            HOME / ".bash_profile",
-            HOME / ".profile"]
-        user_profile = ""
-        for profile in profile_paths:
-            if os.path.isfile(profile):
-                user_profile = profile
-        assert user_profile
-
-        # ensure that config is in XDG DATA DIRS
-        export_str = "export XDG_DATA_DIRS="\
-            f"~/.config/{self.MODULE_NAME}/share:$XDG_DATA_DIRS"
-        if share_dir not in xdg_path:
-            os.environ["XDG_DATA_DIRS"] = \
-                 f'{share_dir}:{os.environ["XDG_DATA_DIRS"]}'
-            with open(user_profile, "a") as f:
-                f.write("\n"+export_str)
-
-        export_str = f"export PATH=~/.config/{self.MODULE_NAME}/bin:$PATH"
-        if not str(bin_dir) in os.environ['PATH']:
-            os.environ["PATH"] = f'{bin_dir}:{os.environ["PATH"]}'
-            with open(user_profile, "a") as f:
-                f.write("\n"+export_str)
 
         self.logger.info("Successfully Initialized")
         self.logger.info(f"PATH: {os.environ['PATH']}")
@@ -105,8 +71,9 @@ class Screentime():
     def block_app(self, app_name: str):
         """ closes blocked apps """
         if app_name in str(subprocess.check_output(['ps', 'aux'])):
+            self.logger.info(f"Killed {app_name}")
             subprocess.call(['notify-send', f'Closing {app_name}. Limit already reached'])
-            subprocess.Popen(["pkill", app_name], bufsize=0)
+            subprocess.Popen(["pkill", "-HUP", app_name], bufsize=0)
 
         # kill app
 
