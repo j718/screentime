@@ -14,7 +14,7 @@ linux-screentime
         :alt: Documentation Status
 
 
-.. image:: https://github.com/j718/screentime/workflows/<WORKFLOW_NAME>/badge.svg
+.. image:: https://github.com/j718/screentime/workflows/pythonapp/badge.svg
         :target: https://linux-screentime.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 

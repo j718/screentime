@@ -77,16 +77,6 @@ def test_api():
         assert False
     assert r.ok
 
-    # get today's history
-    try:
-        bucket = [item for item in requests.get(root_url + "0/buckets").json()
-                  if 'aw-watcher-window' in item][0]
-        history_url = root_url + f"0/buckets/{bucket}/events"
-        r = requests.get(history_url)
-    except requests.exceptions.RequestException as e:
-        print(e)
-        assert False
-    assert r.ok
 
 # test that delete happens when app closes
 # ensure that limit turns off on new day
