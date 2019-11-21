@@ -25,13 +25,10 @@ share_dir = home_dir / 'share'
 bin_dir = home_dir / 'bin'
 app_dir = share_dir / 'applications'
 log_path = (home_dir / 'log.txt')
-if not log_path.exists():
-    log_path.touch()
 
 
 class Screentime():
     def __init__(self):
-        self.logger = self.setup_custom_logger(MODULE_NAME)
         self.MODULE_NAME = MODULE_NAME
         # create config folder
         shutil.rmtree(app_dir, ignore_errors=True)
@@ -39,6 +36,8 @@ class Screentime():
 
         shutil.rmtree(bin_dir, ignore_errors=True)
         bin_dir.mkdir(parents=True, exist_ok=True)
+
+        self.logger = self.setup_custom_logger(MODULE_NAME)
 
         # manage config file
         config_path = home_dir / "config.yml"
@@ -86,6 +85,8 @@ class Screentime():
         self.logger.info(f"XDG_DATA_DIRS: {os.environ['XDG_DATA_DIRS']}")
 
     def setup_custom_logger(self, name):
+        if not log_path.exists():
+            log_path.touch()
         formatter = logging.Formatter(
                         fmt='%(asctime)s %(levelname)-8s %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
