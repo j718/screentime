@@ -6,6 +6,15 @@ python:
   - 3.7
   - 3.6
 
+before-install:
+    - curl -s https://api.github.com/repos/ActivityWatch/activitywatch/releases/latest \
+  | grep browser_download_url \
+  | grep linux \
+  | cut -d '"' -f 4 \
+  | wget -qi -
+    - unzip activitywatch*
+    - ./activitywatch/aw-qt
+
 # Command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: pip install -U tox-travis
 
