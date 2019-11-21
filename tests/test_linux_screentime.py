@@ -68,6 +68,7 @@ def test_profile():
 
 
 def test_api():
+    """ test that api still works """
     root_url = "http://localhost:5600/api/"
     try:
         r = requests.get(root_url + "0/buckets")
@@ -76,12 +77,11 @@ def test_api():
         assert False
     assert r.ok
 
-    bucket = [item for item in requests.get(root_url + "0/buckets").json()
-              if 'aw-watcher-window' in item][0]
-
     # get today's history
-    history_url = root_url + f"0/buckets/{bucket}/events"
     try:
+        bucket = [item for item in requests.get(root_url + "0/buckets").json()
+                  if 'aw-watcher-window' in item][0]
+        history_url = root_url + f"0/buckets/{bucket}/events"
         r = requests.get(history_url)
     except requests.exceptions.RequestException as e:
         print(e)
