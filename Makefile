@@ -85,5 +85,5 @@ dist: clean ## builds source and wheel package
 	ls -l dist
 
 install: clean ## install the package to the active Python's site-packages
+	cp screentime.desktop /usr/share/applications/
 	python setup.py install
-	dnf install wmctrl -y

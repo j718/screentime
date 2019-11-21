@@ -3,14 +3,13 @@
 """Console script for screentime."""
 import sys
 import click
-from screentime.app import Screentime
+from .app import runner
 
 
 @click.command()
 def main(args=None):
     """Console script for screentime."""
-    app = Screentime()
-    app.apply_limits()
+    runner()
     return 0
 
 

@@ -31,6 +31,7 @@ Features
 --------
 
 * TODO
+requires wmctrl and activitywatcher
 
 Credits
 -------

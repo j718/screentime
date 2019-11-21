@@ -32,21 +32,6 @@ class Screentime():
 
         self.logger = self.setup_custom_logger(MODULE_NAME)
 
-        # manage config file
-        config_path = home_dir / "config.yml"
-        if not config_path.exists():
-            config_path.touch()
-        config_file = yaml.safe_load(config_path.open())
-        if config_file:
-            df = json_normalize(config_file)
-        else:
-            self.logger.warning("Config file is empty")
-            df = pd.DataFrame(columns=['id', 'limit'])
-        df.columns = ['id', 'limit']
-        df = df.astype({"id": str, "limit": int})
-        df.id = df.id.str.lower()
-        df["blocked"] = False
-        self.config = df
 
         self.logger.info("Successfully Initialized")
         self.logger.info(f"PATH: {os.environ['PATH']}")
@@ -70,10 +55,10 @@ class Screentime():
 
     def block_app(self, app_name: str):
         """ closes blocked apps """
-        if app_name in str(subprocess.check_output(['ps', 'aux'])):
+        if app_name.lower() in str(subprocess.check_output(['wmctrl', '-l'])).lower():
             self.logger.info(f"Killed {app_name}")
             subprocess.call(['notify-send', f'Closing {app_name}. Limit already reached'])
-            subprocess.Popen(["pkill", "-HUP", app_name], bufsize=0)
+            subprocess.Popen(["wmctrl", "-c", app_name], bufsize=0)
 
         # kill app
 
@@ -106,8 +91,24 @@ class Screentime():
         return df
 
     def apply_limits(self):
+        # manage config file
+        config_path = home_dir / "config.yml"
+        if not config_path.exists():
+            config_path.touch()
+        config_file = yaml.safe_load(config_path.open())
+        if config_file:
+            df = json_normalize(config_file)
+        else:
+            self.logger.warning("Config file is empty")
+            df = pd.DataFrame(columns=['id', 'limit'])
+        df.columns = ['id', 'limit']
+        df = df.astype({"id": str, "limit": int})
+        df.id = df.id.str.lower()
+        df["blocked"] = False
+        config = df
+
         df = self.get_times()
-        restricted = pd.DataFrame.merge(self.config, df, how="left")
+        restricted = pd.DataFrame.merge(config, df, how="left")
         blocked = restricted[(
             (restricted.limit < restricted.duration)
         )]["id"]
@@ -116,12 +117,12 @@ class Screentime():
             self.block_app(x.lower())
 
 
-def main():
+def runner():
     app = Screentime()
     while True:
         app.apply_limits()
-        time.sleep(10)
+        time.sleep(5)
 
 
 if __name__ == "__main__":
-    main()
+    runner()
