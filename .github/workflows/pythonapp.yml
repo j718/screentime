@@ -18,5 +18,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install tox
     - name: Test with pytest
+      env:
+        XDG_DATA_DIRS: none
       run: |
         tox
