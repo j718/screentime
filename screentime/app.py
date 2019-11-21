@@ -67,14 +67,14 @@ class Screentime():
 
         # ensure that config is in XDG DATA DIRS
         export_str = "export XDG_DATA_DIRS="\
-            "~/.config/screentime/share:$XDG_DATA_DIRS"
+            f"~/.config/{self.MODULE_NAME}/share:$XDG_DATA_DIRS"
         if share_dir not in xdg_path:
             os.environ["XDG_DATA_DIRS"] = \
                  f'{share_dir}:{os.environ["XDG_DATA_DIRS"]}'
             with open(user_profile, "a") as f:
                 f.write("\n"+export_str)
 
-        export_str = "export PATH=~/.config/screentime/bin:$PATH"
+        export_str = f"export PATH=~/.config/{self.MODULE_NAME}/bin:$PATH"
         if not str(bin_dir) in os.environ['PATH']:
             os.environ["PATH"] = f'{bin_dir}:{os.environ["PATH"]}'
             with open(user_profile, "a") as f:
