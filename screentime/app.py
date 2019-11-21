@@ -2,6 +2,7 @@
 
 """Main module."""
 import os
+import signal
 import yaml
 import requests
 from pathlib import Path
@@ -47,6 +48,7 @@ class Screentime():
         if config_file:
             df = json_normalize(config_file)
         else:
+            self.logger.warning("Config file is empty")
             df = pd.DataFrame(columns=['id', 'limit'])
         df.columns = ['id', 'limit']
         df = df.astype({"id": str, "limit": int})
@@ -101,30 +103,12 @@ class Screentime():
         return logger
 
     def block_app(self, app_name: str):
-        """ creates a fake desktop app"""
-        # overwrite desktop entry
-        sample_desktop = f"""#!/usr/bin/env xdg-open
-[Desktop Entry]
-Version=1.0
-Terminal=false
-Type=Application
-Name={app_name}
-Exec=notify-send "limit for the day has been reached"
-Icon=error"""
-        desktop_path = app_dir / (app_name + ".desktop")
-        print(f"blocked {app_name}")
-        desktop_path.touch()
-        desktop_path.write_text(sample_desktop)
-
-        # overwrite terminal command
-        sample_bin = f"""#!/usr/bin/sh
-echo "limit for the day has been reached"""
-        bin_path = bin_dir / app_name
-        bin_path.touch()
-        bin_path.write_text(sample_bin)
+        """ closes blocked apps """
+        if app_name in str(subprocess.check_output(['ps', 'aux'])):
+            subprocess.call(['notify-send', f'Closing {app_name}. Limit already reached'])
+            subprocess.Popen(["pkill", app_name], bufsize=0)
 
         # kill app
-        subprocess.Popen(["pkill", app_name], bufsize=0)
 
     def get_times(self):
         root_url = "http://localhost:5600/api/"
@@ -158,13 +142,8 @@ echo "limit for the day has been reached"""
         df = self.get_times()
         restricted = pd.DataFrame.merge(self.config, df, how="left")
         blocked = restricted[(
-            (restricted.limit < restricted.duration) &
-            (self.config.blocked == 0)
+            (restricted.limit < restricted.duration)
         )]["id"]
-
-        self.config.loc[(
-            restricted.limit < restricted.duration, "blocked"
-        )] = True
 
         for x in blocked:
             self.block_app(x.lower())
