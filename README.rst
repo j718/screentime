@@ -14,6 +14,10 @@ linux-screentime
         :alt: Documentation Status
 
 
+.. image:: https://github.com/j718/screentime/workflows/<WORKFLOW_NAME>/badge.svg
+        :target: https://linux-screentime.readthedocs.io/en/latest/?badge=latest
+        :alt: Documentation Status
+
 
 
 A project to limit screentime relying on activity watcher
