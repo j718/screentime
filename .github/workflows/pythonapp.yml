@@ -19,13 +19,13 @@ jobs:
         pip install tox
     - name: Install activitywatch
       run: |
-        curl https://api.github.com/repos/ActivityWatch/activitywatch/releases/latest \
-             grep browser_download_url \
-             grep linux \
-             cut -d '"' -f 4 \
-             wget -qi -
-        unzip activitywatch*
-        ./activitywatch/aw-qt
+        curl https://api.github.com/repos/ActivityWatch/activitywatch/releases/latest
+            #  grep browser_download_url \
+            #  grep linux \
+            #  cut -d '"' -f 4 \
+            #  wget -qi -
+        # unzip activitywatch*
+        # ./activitywatch/aw-qt
     - name: Test with pytest
       env:
         XDG_DATA_DIRS: none
