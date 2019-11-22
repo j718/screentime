@@ -15,9 +15,9 @@ click = "*"
 requests = "*"
 pandas = "*"
 pyyaml = "*"
-pyqt5 = "*"
+pyinstaller = "==3.4"
+pyqt5 = "==5.9.2"
 fbs = "*"
-pyqt-distutils = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.6.3"

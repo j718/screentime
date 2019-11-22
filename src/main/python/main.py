@@ -1,3 +1,4 @@
+# work-around for https://github.com/pyinstaller/pyinstaller/issues/4064
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from PyQt5.QtWidgets import QMainWindow
 import sys
