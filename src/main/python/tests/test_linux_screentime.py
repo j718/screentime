@@ -2,15 +2,8 @@
 # -*- coding: utf-8 -*-
 
 """Tests for `screentime` package."""
-
-
-# from click.testing import CliRunner
-
-from screentime.app import Screentime, HOME, MODULE_NAME
+from screentime.timer import Screentime, HOME, MODULE_NAME
 import requests
-# from screentime import cli
-import os
-from pathlib import Path
 
 
 def test_setUp():
@@ -24,10 +17,8 @@ def tearDown():
 
 def test_config():
     """ ensure that all config folders exist """
-    base = Path(os.environ['HOME']) / ".config/screentime"
+    base = HOME / ".config" / MODULE_NAME
     assert base.exists()
-    assert (base / "bin").exists()
-    assert (base / "share/applications").exists()
     assert (base / "config.yml").exists()
 
 
