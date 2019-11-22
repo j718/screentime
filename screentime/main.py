@@ -28,10 +28,17 @@ class MyWindow(QtWidgets.QDialog, Ui_MainWindow):
         return(warning)
 
     def accept(self):
-        self.done(0)
+        """
+        invoked by clicking the accept button of the dialog. meant to close app in question
+        """
+        self.done(1)
 
     def add(self):
-        self.done(1)
+        """
+        invoked by clicking the add time button on the dialog.
+         meant to add fifteen minutes until attempting to kill again
+        """
+        self.done(0)
 
 class Worker(QRunnable):
     """
@@ -53,9 +60,10 @@ class Worker(QRunnable):
         """ closes blocked apps """
         if app_name.lower() in str(subprocess.check_output(['wmctrl', '-l'])).lower():
             window = MyWindow(app_name)
-            window.exec_()
-            print(f"Killed {app_name}")
-            subprocess.call(['notify-send', f'Closing {app_name}. Limit already reached'])
+            response = window.exec_()
+            if response:
+                print(f"Killed {app_name}")
+                subprocess.call(['notify-send', f'Closing {app_name}. Limit already reached'])
             # subprocess.Popen(["wmctrl", "-c", app_name], bufsize=0)
 
 # def block_app(window, app_name: str):
@@ -65,12 +73,21 @@ class Worker(QRunnable):
 #         subprocess.call(['notify-send', f'Closing {app_name}. Limit already reached'])
 #         subprocess.Popen(["wmctrl", "-c", app_name], bufsize=0)
 
+class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
 
+    def __init__(self, icon, parent=None):
+        QtWidgets.QSystemTrayIcon.__init__(self, icon, parent)
+        self.menu = QtWidgets.QMenu()
+        self.exit_action = QAction('Exit Application', self)
+        self.exit_action.setStatusTip('Exit the application.')
+        self.exit_action.triggered.connect(lambda: QApplication.quit())
+        self.menu.addAction(self.exit_action)
+        self.setContextMenu(self.menu)
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     QtWidgets.QApplication.setQuitOnLastWindowClosed(False)
-    trayIcon = QtWidgets.QSystemTrayIcon(QtGui.QIcon("icons/icon.png"), app)
+    trayIcon = SystemTrayIcon(QtGui.QIcon("icons/icon.png"), app)
     trayIcon.show()
     worker = Worker()
     threadpool = QThreadPool()
