@@ -2,17 +2,13 @@
 
 """Main module."""
 import os
-import signal
 import yaml
 import requests
 from pathlib import Path
-import subprocess
 from datetime import datetime
 from dateutil.parser import parse
-import shutil
 from pandas.io.json import json_normalize
 import pandas as pd
-import time
 import logging
 import sys
 
@@ -28,11 +24,8 @@ log_path = (home_dir / 'log.txt')
 class Screentime():
     def __init__(self):
         self.MODULE_NAME = MODULE_NAME
-        # create config folder
 
         self.logger = self.setup_custom_logger(MODULE_NAME)
-
-
         self.logger.info("Successfully Initialized")
 
         config_path = home_dir / "config.yml"
@@ -64,8 +57,6 @@ class Screentime():
         logger.addHandler(handler)
         logger.addHandler(screen_handler)
         return logger
-
-
 
     def get_times(self):
         root_url = "http://localhost:5600/api/"
@@ -109,7 +100,6 @@ class Screentime():
         df = self.get_times()
         duration_dict = df.set_index('id').to_dict()
         duration = duration_dict['duration'][app_name]
-        self.config.loc[self.config['id'] == app_name, 'limit'] = duration + 15 * 60
+        new_limit = duration + 15 * 60
+        self.config.loc[self.config['id'] == app_name, 'limit'] = new_limit
         print(f"Adding 15 minutes to {app_name}")
-
-

@@ -1,15 +1,9 @@
-import sys
-from fbs_runtime.application_context.PyQt5 import ApplicationContext
-from PyQt5 import QtCore, QtGui, QtWidgets, uic
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
+from PyQt5 import QtWidgets, uic
+from PyQt5.QtWidgets import QAction, QApplication
+from PyQt5.QtCore import pyqtSlot, QRunnable
 from .timer import Screentime
 import time
 import subprocess
-
-# qtcreator_file = ApplicationContext.get_resource("dialog.ui")
-# Ui_MainWindow, QtBaseClass = uic.loadUiType(qtcreator_file)
 
 
 class MyWindow(QtWidgets.QDialog):
@@ -34,7 +28,8 @@ class MyWindow(QtWidgets.QDialog):
 
     def accept(self):
         """
-        invoked by clicking the accept button of the dialog. meant to close app in question
+        invoked by clicking the accept button of the dialog.i
+         meant to close app in question
         """
         self.done(1)
 
@@ -44,6 +39,7 @@ class MyWindow(QtWidgets.QDialog):
          meant to add fifteen minutes until attempting to kill again
         """
         self.done(2)
+
 
 class Worker(QRunnable):
     """
@@ -65,13 +61,14 @@ class Worker(QRunnable):
 
     def block_app(self, app_name: str, timer, window):
         """ closes blocked apps """
-        if app_name.lower() in str(subprocess.check_output(['wmctrl', '-l'])).lower():
-
+        app_list = str(subprocess.check_output(['wmctrl', '-l'])).lower()
+        if app_name.lower() in app_list:
             self.window.set_name(app_name)
             response = self.window.exec_()
             if response == 1:
                 print(f"Killed {app_name}")
-                subprocess.call(['notify-send', f'Closing {app_name}. Limit already reached'])
+                subprocess.call(['notify-send',
+                                 f'Closing {app_name}. Limit already reached'])
                 subprocess.Popen(["wmctrl", "-c", app_name], bufsize=0)
             elif response == 2:
                 timer.increase_limit(app_name)
@@ -89,16 +86,3 @@ class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
         self.exit_action.triggered.connect(lambda: QApplication.quit())
         self.menu.addAction(self.exit_action)
         self.setContextMenu(self.menu)
-
-def main():
-    app = QtWidgets.QApplication(sys.argv)
-    app.setWindowIcon(QtGui.QIcon('icons/icon.png'))
-    QtWidgets.QApplication.setQuitOnLastWindowClosed(False)
-    trayIcon = SystemTrayIcon(QtGui.QIcon("icons/icon.png"), app)
-    trayIcon.show()
-
-    # start a worker that continually checks if it is time to close
-    worker = Worker()
-    threadpool = QThreadPool()
-    threadpool.start(worker)
-    sys.exit(app.exec_())
