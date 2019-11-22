@@ -16,6 +16,8 @@ requests = "*"
 pandas = "*"
 pyyaml = "*"
 pyqt5 = "*"
+fbs = "*"
+pyqt-distutils = "*"
 
 [requires]
 python_version = "3.7"

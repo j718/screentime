@@ -93,7 +93,6 @@ class Screentime():
         df.columns = ['id', 'duration']
         df = df.astype({"id": str, "duration": int})
         # df.columns /= 60
-        print(df)
         df.id = df.id.str.lower()
         return df
 
@@ -109,7 +108,6 @@ class Screentime():
     def increase_limit(self, app_name):
         df = self.get_times()
         duration_dict = df.set_index('id').to_dict()
-        print(duration_dict)
         duration = duration_dict['duration'][app_name]
         self.config.loc[self.config['id'] == app_name, 'limit'] = duration + 15 * 60
         print(f"Adding 15 minutes to {app_name}")

@@ -17,6 +17,8 @@ setup_requirements = []
 
 test_requirements = []
 
+from pyqt_distutils.build_ui import build_ui
+
 setup(
     author="Jacob Clarke",
     author_email='jacobclarke718@gmail.com',
@@ -47,6 +49,7 @@ setup(
     keywords='screentime',
     name='screentime',
     packages=find_packages(include=['screentime', 'screentime.*']),
+    cmdclass = {"build_ui": build_ui},
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
