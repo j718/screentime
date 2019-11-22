@@ -33,6 +33,19 @@ Features
 * TODO
 requires wmctrl and activitywatcher
 
+create a build process
+
+create more tests
+
+create things for tray mneu
+
+create preferences
+
+create gui to ask for activity watch
+
+add bin item
+
+
 Credits
 -------
 
