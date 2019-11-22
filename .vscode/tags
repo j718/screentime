@@ -1,0 +1,117 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ApplicationContext	../src/main/python/main.py	/^from fbs_runtime.application_context.PyQt5 import ApplicationContext$/;"	kind:namespace	line:2
+HOME	../src/main/python/screentime/timer.py	/^HOME = Path(os.environ['HOME'])$/;"	kind:variable	line:17
+HOME	../src/main/python/tests/test_linux_screentime.py	/^from screentime.timer import Screentime, HOME, MODULE_NAME$/;"	kind:namespace	line:5
+MAX_RESULTS	../src/main/python/screentime/timer.py	/^MAX_RESULTS = 1000$/;"	kind:variable	line:13
+MODULE_NAME	../src/main/python/screentime/timer.py	/^MODULE_NAME = 'screentime'$/;"	kind:variable	line:16
+MODULE_NAME	../src/main/python/tests/test_linux_screentime.py	/^from screentime.timer import Screentime, HOME, MODULE_NAME$/;"	kind:namespace	line:5
+MyWindow	../src/main/python/screentime/app.py	/^class MyWindow(QtWidgets.QDialog):$/;"	kind:class	line:8
+Path	../src/main/python/screentime/timer.py	/^from pathlib import Path$/;"	kind:namespace	line:7
+QAction	../src/main/python/main.py	/^from PyQt5.QtWidgets import QSystemTrayIcon, QMenu, QAction$/;"	kind:namespace	line:5
+QMenu	../src/main/python/main.py	/^from PyQt5.QtWidgets import QSystemTrayIcon, QMenu, QAction$/;"	kind:namespace	line:5
+QRunnable	../src/main/python/screentime/app.py	/^from PyQt5.QtCore import pyqtSlot, QRunnable$/;"	kind:namespace	line:2
+QSystemTrayIcon	../src/main/python/main.py	/^from PyQt5.QtWidgets import QSystemTrayIcon, QMenu, QAction$/;"	kind:namespace	line:5
+QThreadPool	../src/main/python/main.py	/^from PyQt5.QtCore import QThreadPool$/;"	kind:namespace	line:4
+QtWidgets	../src/main/python/screentime/app.py	/^from PyQt5 import QtWidgets, uic$/;"	kind:namespace	line:1
+Screentime	../src/main/python/screentime/app.py	/^from .timer import Screentime$/;"	kind:namespace	line:3
+Screentime	../src/main/python/screentime/timer.py	/^class Screentime():$/;"	kind:class	line:21
+Screentime	../src/main/python/tests/test_linux_screentime.py	/^from screentime.timer import Screentime, HOME, MODULE_NAME$/;"	kind:namespace	line:5
+Worker	../src/main/python/screentime/app.py	/^class Worker(QRunnable):$/;"	kind:class	line:38
+__email__	../src/main/python/screentime/__init__.py	/^__email__ = 'jacobclarke718@gmail.com'$/;"	kind:variable	line:6
+__init__	../src/main/python/screentime/app.py	/^    def __init__(self, qt_creator_file):$/;"	kind:member	line:9
+__init__	../src/main/python/screentime/app.py	/^    def __init__(self, ui_path, logger, *args, **kwargs):$/;"	kind:member	line:42
+__init__	../src/main/python/screentime/timer.py	/^    def __init__(self, logger):$/;"	kind:member	line:22
+__init__.py	../src/main/python/screentime/__init__.py	1;"	kind:file	line:1
+__init__.py	../src/main/python/tests/__init__.py	1;"	kind:file	line:1
+__version__	../src/main/python/screentime/__init__.py	/^__version__ = '0.1.0'$/;"	kind:variable	line:7
+accept	../src/main/python/screentime/app.py	/^    def accept(self):$/;"	kind:member	line:23
+add	../src/main/python/screentime/app.py	/^    def add(self):$/;"	kind:member	line:30
+app	../src/main/python/main.py	/^from screentime import app$/;"	kind:namespace	line:6
+app.py	../src/main/python/screentime/app.py	1;"	kind:file	line:1
+apply_limits	../src/main/python/screentime/timer.py	/^    def apply_limits(self):$/;"	kind:member	line:71
+block_app	../src/main/python/screentime/app.py	/^    def block_app(self, app_name: str, timer, window):$/;"	kind:member	line:56
+cli.py	../src/main/python/screentime/cli.py	1;"	kind:file	line:1
+click	../src/main/python/screentime/cli.py	/^import click$/;"	kind:namespace	line:5
+datetime	../src/main/python/screentime/timer.py	/^from datetime import datetime$/;"	kind:namespace	line:8
+fbs_pyinstaller_hook.py	../target/PyInstaller/fbs_pyinstaller_hook.py	1;"	kind:file	line:1
+get_times	../src/main/python/screentime/timer.py	/^    def get_times(self):$/;"	kind:member	line:42
+get_warning	../src/main/python/screentime/app.py	/^    def get_warning(self, app_name):$/;"	kind:member	line:19
+home_dir	../src/main/python/screentime/timer.py	/^home_dir = Path(HOME \/ '.config' \/ MODULE_NAME)$/;"	kind:variable	line:18
+importlib	../target/PyInstaller/fbs_pyinstaller_hook.py	/^import importlib$/;"	kind:namespace	line:1
+increase_limit	../src/main/python/screentime/timer.py	/^    def increase_limit(self, app_name):$/;"	kind:member	line:80
+json_normalize	../src/main/python/screentime/timer.py	/^from pandas.io.json import json_normalize$/;"	kind:namespace	line:10
+logging	../src/main/python/main.py	/^import logging$/;"	kind:namespace	line:7
+main	../src/main/python/main.py	/^def main():$/;"	kind:function	line:22
+main	../src/main/python/screentime/cli.py	/^def main(args=None):$/;"	kind:function	line:10
+main.py	../src/main/python/main.py	1;"	kind:file	line:1
+module	../target/PyInstaller/fbs_pyinstaller_hook.py	/^module = importlib.import_module('fbs_runtime._frozen')$/;"	kind:variable	line:2
+moduleInformation	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qaxcontainer.py	/^def moduleInformation():$/;"	kind:function	line:32
+moduleInformation	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qscintilla.py	/^def moduleInformation():$/;"	kind:function	line:32
+moduleInformation	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qtcharts.py	/^def moduleInformation():$/;"	kind:function	line:32
+moduleInformation	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qtprintsupport.py	/^def moduleInformation():$/;"	kind:function	line:32
+moduleInformation	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qtquickwidgets.py	/^def moduleInformation():$/;"	kind:function	line:32
+moduleInformation	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qtwebenginewidgets.py	/^def moduleInformation():$/;"	kind:function	line:32
+moduleInformation	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qtwebkit.py	/^def moduleInformation():$/;"	kind:function	line:50
+moduleInformation	../target/screentime/PyQt5/uic/widget-plugins/qaxcontainer.py	/^def moduleInformation():$/;"	kind:function	line:32
+moduleInformation	../target/screentime/PyQt5/uic/widget-plugins/qscintilla.py	/^def moduleInformation():$/;"	kind:function	line:32
+moduleInformation	../target/screentime/PyQt5/uic/widget-plugins/qtcharts.py	/^def moduleInformation():$/;"	kind:function	line:32
+moduleInformation	../target/screentime/PyQt5/uic/widget-plugins/qtprintsupport.py	/^def moduleInformation():$/;"	kind:function	line:32
+moduleInformation	../target/screentime/PyQt5/uic/widget-plugins/qtquickwidgets.py	/^def moduleInformation():$/;"	kind:function	line:32
+moduleInformation	../target/screentime/PyQt5/uic/widget-plugins/qtwebenginewidgets.py	/^def moduleInformation():$/;"	kind:function	line:32
+moduleInformation	../target/screentime/PyQt5/uic/widget-plugins/qtwebkit.py	/^def moduleInformation():$/;"	kind:function	line:50
+os	../src/main/python/screentime/timer.py	/^import os$/;"	kind:namespace	line:4
+parse	../src/main/python/screentime/timer.py	/^from dateutil.parser import parse$/;"	kind:namespace	line:9
+pd	../src/main/python/screentime/timer.py	/^import pandas as pd$/;"	kind:namespace	line:11
+pluginType	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qaxcontainer.py	/^pluginType = MODULE$/;"	kind:variable	line:25
+pluginType	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qscintilla.py	/^pluginType = MODULE$/;"	kind:variable	line:25
+pluginType	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qtcharts.py	/^pluginType = MODULE$/;"	kind:variable	line:25
+pluginType	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qtprintsupport.py	/^pluginType = MODULE$/;"	kind:variable	line:25
+pluginType	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qtquickwidgets.py	/^pluginType = MODULE$/;"	kind:variable	line:25
+pluginType	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qtwebenginewidgets.py	/^pluginType = MODULE$/;"	kind:variable	line:25
+pluginType	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qtwebkit.py	/^pluginType = MODULE$/;"	kind:variable	line:43
+pluginType	../target/screentime/PyQt5/uic/widget-plugins/qaxcontainer.py	/^pluginType = MODULE$/;"	kind:variable	line:25
+pluginType	../target/screentime/PyQt5/uic/widget-plugins/qscintilla.py	/^pluginType = MODULE$/;"	kind:variable	line:25
+pluginType	../target/screentime/PyQt5/uic/widget-plugins/qtcharts.py	/^pluginType = MODULE$/;"	kind:variable	line:25
+pluginType	../target/screentime/PyQt5/uic/widget-plugins/qtprintsupport.py	/^pluginType = MODULE$/;"	kind:variable	line:25
+pluginType	../target/screentime/PyQt5/uic/widget-plugins/qtquickwidgets.py	/^pluginType = MODULE$/;"	kind:variable	line:25
+pluginType	../target/screentime/PyQt5/uic/widget-plugins/qtwebenginewidgets.py	/^pluginType = MODULE$/;"	kind:variable	line:25
+pluginType	../target/screentime/PyQt5/uic/widget-plugins/qtwebkit.py	/^pluginType = MODULE$/;"	kind:variable	line:43
+pyqtSlot	../src/main/python/screentime/app.py	/^from PyQt5.QtCore import pyqtSlot, QRunnable$/;"	kind:namespace	line:2
+qaxcontainer.py	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qaxcontainer.py	1;"	kind:file	line:1
+qaxcontainer.py	../target/screentime/PyQt5/uic/widget-plugins/qaxcontainer.py	1;"	kind:file	line:1
+qscintilla.py	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qscintilla.py	1;"	kind:file	line:1
+qscintilla.py	../target/screentime/PyQt5/uic/widget-plugins/qscintilla.py	1;"	kind:file	line:1
+qtcharts.py	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qtcharts.py	1;"	kind:file	line:1
+qtcharts.py	../target/screentime/PyQt5/uic/widget-plugins/qtcharts.py	1;"	kind:file	line:1
+qtprintsupport.py	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qtprintsupport.py	1;"	kind:file	line:1
+qtprintsupport.py	../target/screentime/PyQt5/uic/widget-plugins/qtprintsupport.py	1;"	kind:file	line:1
+qtquickwidgets.py	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qtquickwidgets.py	1;"	kind:file	line:1
+qtquickwidgets.py	../target/screentime/PyQt5/uic/widget-plugins/qtquickwidgets.py	1;"	kind:file	line:1
+qtwebenginewidgets.py	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qtwebenginewidgets.py	1;"	kind:file	line:1
+qtwebenginewidgets.py	../target/screentime/PyQt5/uic/widget-plugins/qtwebenginewidgets.py	1;"	kind:file	line:1
+qtwebkit.py	../target/installer/opt/screentime/PyQt5/uic/widget-plugins/qtwebkit.py	1;"	kind:file	line:1
+qtwebkit.py	../target/screentime/PyQt5/uic/widget-plugins/qtwebkit.py	1;"	kind:file	line:1
+requests	../src/main/python/screentime/timer.py	/^import requests$/;"	kind:namespace	line:6
+requests	../src/main/python/tests/test_linux_screentime.py	/^import requests$/;"	kind:namespace	line:6
+run	../src/main/python/screentime/app.py	/^    def run(self):$/;"	kind:member	line:48
+runner	../src/main/python/screentime/cli.py	/^from .app import runner$/;"	kind:namespace	line:6
+set_name	../src/main/python/screentime/app.py	/^    def set_name(self, name):$/;"	kind:member	line:16
+setup_custom_logger	../src/main/python/main.py	/^def setup_custom_logger(name):$/;"	kind:function	line:10
+subprocess	../src/main/python/screentime/app.py	/^import subprocess$/;"	kind:namespace	line:5
+sys	../src/main/python/main.py	/^import sys$/;"	kind:namespace	line:3
+sys	../src/main/python/screentime/cli.py	/^import sys$/;"	kind:namespace	line:4
+tearDown	../src/main/python/tests/test_linux_screentime.py	/^def tearDown():$/;"	kind:function	line:14
+test_api	../src/main/python/tests/test_linux_screentime.py	/^def test_api():$/;"	kind:function	line:25
+test_config	../src/main/python/tests/test_linux_screentime.py	/^def test_config():$/;"	kind:function	line:18
+test_linux_screentime.py	../src/main/python/tests/test_linux_screentime.py	1;"	kind:file	line:1
+test_setUp	../src/main/python/tests/test_linux_screentime.py	/^def test_setUp():$/;"	kind:function	line:9
+time	../src/main/python/screentime/app.py	/^import time$/;"	kind:namespace	line:4
+timer.py	../src/main/python/screentime/timer.py	1;"	kind:file	line:1
+uic	../src/main/python/screentime/app.py	/^from PyQt5 import QtWidgets, uic$/;"	kind:namespace	line:1
+xdg_path	../src/main/python/screentime/timer.py	/^xdg_path = [Path(x) for x in os.environ['XDG_DATA_DIRS'].split(':')]$/;"	kind:variable	line:15
+yaml	../src/main/python/screentime/timer.py	/^import yaml$/;"	kind:namespace	line:5

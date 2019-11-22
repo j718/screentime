@@ -6,13 +6,9 @@ import subprocess
 
 
 class MyWindow(QtWidgets.QDialog):
-    def __init__(self, app_name: str, qt_creator_file):
-        # QtWidgets.QMainWindow.__init__(self)
+    def __init__(self, qt_creator_file):
         super().__init__()
         uic.loadUi(qt_creator_file, self)
-        # self.show()
-        # self.setupUi(self)
-        self.app_name.setText(self.get_warning(app_name))
 
         self.accept_button.clicked.connect(self.accept)
         self.add_button.clicked.connect(self.add)
@@ -46,7 +42,7 @@ class Worker(QRunnable):
     def __init__(self, ui_path, logger, *args, **kwargs):
         super(Worker, self).__init__()
         self.logger = logger
-        self.window = MyWindow("placeholder", ui_path)
+        self.window = MyWindow(ui_path)
 
     @pyqtSlot()
     def run(self):
