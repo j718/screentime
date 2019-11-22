@@ -45,6 +45,7 @@ create gui to ask for activity watch
 
 add bin item
 
+create block groups
 
 Credits
 -------
