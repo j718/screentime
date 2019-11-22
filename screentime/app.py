@@ -35,6 +35,20 @@ class Screentime():
 
         self.logger.info("Successfully Initialized")
 
+        config_path = home_dir / "config.yml"
+        if not config_path.exists():
+            config_path.touch()
+        config_file = yaml.safe_load(config_path.open())
+        if config_file:
+            df_config = json_normalize(config_file)
+        else:
+            self.logger.warning("Config file is empty")
+            df_config = pd.DataFrame(columns=['id', 'limit'])
+        df_config.columns = ['id', 'limit']
+        df_config = df_config.astype({"id": str, "limit": int})
+        df_config.id = df_config.id.str.lower()
+        self.config = df_config
+
     def setup_custom_logger(self, name):
         if not log_path.exists():
             log_path.touch()
@@ -78,30 +92,26 @@ class Screentime():
               .reset_index())
         df.columns = ['id', 'duration']
         df = df.astype({"id": str, "duration": int})
+        # df.columns /= 60
+        print(df)
         df.id = df.id.str.lower()
         return df
 
     def apply_limits(self):
         # manage config file
-        config_path = home_dir / "config.yml"
-        if not config_path.exists():
-            config_path.touch()
-        config_file = yaml.safe_load(config_path.open())
-        if config_file:
-            df = json_normalize(config_file)
-        else:
-            self.logger.warning("Config file is empty")
-            df = pd.DataFrame(columns=['id', 'limit'])
-        df.columns = ['id', 'limit']
-        df = df.astype({"id": str, "limit": int})
-        df.id = df.id.str.lower()
-        df["blocked"] = False
-        config = df
-
         df = self.get_times()
-        restricted = pd.DataFrame.merge(config, df, how="left")
+        restricted = pd.DataFrame.merge(self.config, df, how="left")
         blocked = restricted[(
             (restricted.limit < restricted.duration)
         )]["id"]
-
         return blocked
+
+    def increase_limit(self, app_name):
+        df = self.get_times()
+        duration_dict = df.set_index('id').to_dict()
+        print(duration_dict)
+        duration = duration_dict['duration'][app_name]
+        self.config.loc[self.config['id'] == app_name, 'limit'] = duration + 15 * 60
+        print(f"Adding 15 minutes to {app_name}")
+
+
