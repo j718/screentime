@@ -24,6 +24,7 @@ def main():
     appctxt = ApplicationContext()
     ui = appctxt.get_resource("dialog.ui")
     appctxt.app.setQuitOnLastWindowClosed(False)
+    appctxt.app.setApplicationName("Screentime")
     tray = QSystemTrayIcon(appctxt.app_icon, appctxt.app)
     tray.setVisible(True)
 

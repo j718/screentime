@@ -17,7 +17,7 @@ class MyWindow(QtWidgets.QDialog):
         self.app_name.setText(self.get_warning(name))
 
     def get_warning(self, app_name):
-        warning = f"Warning, You have reached your limit for {app_name} today."
+        warning = f"Warning: You have reached your limit for {app_name} today."
         return(warning)
 
     def accept(self):
