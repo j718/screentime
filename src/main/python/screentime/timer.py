@@ -9,8 +9,6 @@ from datetime import datetime
 from dateutil.parser import parse
 from pandas.io.json import json_normalize
 import pandas as pd
-import logging
-import sys
 
 MAX_RESULTS = 1000
 
@@ -18,14 +16,13 @@ xdg_path = [Path(x) for x in os.environ['XDG_DATA_DIRS'].split(':')]
 MODULE_NAME = 'screentime'
 HOME = Path(os.environ['HOME'])
 home_dir = Path(HOME / '.config' / MODULE_NAME)
-log_path = (home_dir / 'log.txt')
 
 
 class Screentime():
-    def __init__(self):
+    def __init__(self, logger):
         self.MODULE_NAME = MODULE_NAME
 
-        self.logger = self.setup_custom_logger(MODULE_NAME)
+        self.logger = logger
         self.logger.info("Successfully Initialized")
 
         config_path = home_dir / "config.yml"
@@ -41,22 +38,6 @@ class Screentime():
         df_config = df_config.astype({"id": str, "limit": int})
         df_config.id = df_config.id.str.lower()
         self.config = df_config
-
-    def setup_custom_logger(self, name):
-        if not log_path.exists():
-            log_path.touch()
-        formatter = logging.Formatter(
-                        fmt='%(asctime)s %(levelname)-8s %(message)s',
-                        datefmt='%Y-%m-%d %H:%M:%S')
-        handler = logging.FileHandler(home_dir / 'log.txt', mode='a')
-        handler.setFormatter(formatter)
-        screen_handler = logging.StreamHandler(stream=sys.stdout)
-        screen_handler.setFormatter(formatter)
-        logger = logging.getLogger(name)
-        logger.setLevel(logging.DEBUG)
-        logger.addHandler(handler)
-        logger.addHandler(screen_handler)
-        return logger
 
     def get_times(self):
         root_url = "http://localhost:5600/api/"
@@ -102,4 +83,4 @@ class Screentime():
         duration = duration_dict['duration'][app_name]
         new_limit = duration + 15 * 60
         self.config.loc[self.config['id'] == app_name, 'limit'] = new_limit
-        print(f"Adding 15 minutes to {app_name}")
+        self.logger.info(f"Adding 15 minutes to {app_name}")

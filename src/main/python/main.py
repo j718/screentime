@@ -4,9 +4,23 @@ import sys
 from PyQt5.QtCore import QThreadPool
 from PyQt5.QtWidgets import QSystemTrayIcon, QMenu, QAction
 from screentime import app
+import logging
+
+
+def setup_custom_logger(name):
+    formatter = logging.Formatter(
+                    fmt='%(asctime)s %(levelname)-8s %(message)s',
+                    datefmt='%Y-%m-%d %H:%M:%S')
+    screen_handler = logging.StreamHandler(stream=sys.stdout)
+    screen_handler.setFormatter(formatter)
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(screen_handler)
+    return logger
 
 
 def main():
+    logger = setup_custom_logger("Screentime")
     appctxt = ApplicationContext()
     ui = appctxt.get_resource("dialog.ui")
     appctxt.app.setQuitOnLastWindowClosed(False)
@@ -22,7 +36,7 @@ def main():
     tray.setContextMenu(menu)
 
     # start a worker that continually checks if it is time to close
-    worker = app.Worker(ui)
+    worker = app.Worker(ui, logger)
     threadpool = QThreadPool()
     threadpool.start(worker)
     exit_code = appctxt.app.exec_()

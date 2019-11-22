@@ -1,5 +1,4 @@
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QAction, QApplication
 from PyQt5.QtCore import pyqtSlot, QRunnable
 from .timer import Screentime
 import time
@@ -10,7 +9,6 @@ class MyWindow(QtWidgets.QDialog):
     def __init__(self, app_name: str, qt_creator_file):
         # QtWidgets.QMainWindow.__init__(self)
         super().__init__()
-        print(qt_creator_file)
         uic.loadUi(qt_creator_file, self)
         # self.show()
         # self.setupUi(self)
@@ -45,14 +43,14 @@ class Worker(QRunnable):
     """
     Worker thread
     """
-    def __init__(self, ui_path, *args, **kwargs):
+    def __init__(self, ui_path, logger, *args, **kwargs):
         super(Worker, self).__init__()
-
+        self.logger = logger
         self.window = MyWindow("placeholder", ui_path)
 
     @pyqtSlot()
     def run(self):
-        timer = Screentime()
+        timer = Screentime(self.logger)
         while True:
             blocked = timer.apply_limits()
             for x in blocked:
@@ -66,23 +64,9 @@ class Worker(QRunnable):
             self.window.set_name(app_name)
             response = self.window.exec_()
             if response == 1:
-                print(f"Killed {app_name}")
+                self.logger.info(f"Killed {app_name}")
                 subprocess.call(['notify-send',
                                  f'Closing {app_name}. Limit already reached'])
                 subprocess.Popen(["wmctrl", "-c", app_name], bufsize=0)
             elif response == 2:
                 timer.increase_limit(app_name)
-
-
-class SystemTrayIcon(QtWidgets.QSystemTrayIcon):
-    """
-    adds a tray icon that can be used to quit
-    """
-    def __init__(self, icon, parent=None):
-        QtWidgets.QSystemTrayIcon.__init__(self, icon, parent)
-        self.menu = QtWidgets.QMenu()
-        self.exit_action = QAction('Exit Application', self)
-        self.exit_action.setStatusTip('Exit the application.')
-        self.exit_action.triggered.connect(lambda: QApplication.quit())
-        self.menu.addAction(self.exit_action)
-        self.setContextMenu(self.menu)
