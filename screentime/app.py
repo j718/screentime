@@ -34,8 +34,6 @@ class Screentime():
 
 
         self.logger.info("Successfully Initialized")
-        self.logger.info(f"PATH: {os.environ['PATH']}")
-        self.logger.info(f"XDG_DATA_DIRS: {os.environ['XDG_DATA_DIRS']}")
 
     def setup_custom_logger(self, name):
         if not log_path.exists():
@@ -53,14 +51,7 @@ class Screentime():
         logger.addHandler(screen_handler)
         return logger
 
-    def block_app(self, app_name: str):
-        """ closes blocked apps """
-        if app_name.lower() in str(subprocess.check_output(['wmctrl', '-l'])).lower():
-            self.logger.info(f"Killed {app_name}")
-            subprocess.call(['notify-send', f'Closing {app_name}. Limit already reached'])
-            subprocess.Popen(["wmctrl", "-c", app_name], bufsize=0)
 
-        # kill app
 
     def get_times(self):
         root_url = "http://localhost:5600/api/"
@@ -113,16 +104,4 @@ class Screentime():
             (restricted.limit < restricted.duration)
         )]["id"]
 
-        for x in blocked:
-            self.block_app(x.lower())
-
-
-def runner():
-    app = Screentime()
-    while True:
-        app.apply_limits()
-        time.sleep(5)
-
-
-if __name__ == "__main__":
-    runner()
+        return blocked
