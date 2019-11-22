@@ -4,11 +4,12 @@
 """Tests for `screentime` package."""
 from screentime.timer import Screentime, HOME, MODULE_NAME
 import requests
+import logging
 
 
 def test_setUp():
     """Set up test fixtures, if any."""
-    Screentime()
+    Screentime(logging.getLogger())
 
 
 def tearDown():

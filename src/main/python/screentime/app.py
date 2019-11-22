@@ -13,12 +13,10 @@ class MyWindow(QtWidgets.QDialog):
         self.accept_button.clicked.connect(self.accept)
         self.add_button.clicked.connect(self.add)
 
-    def set_name(self, name):
-        self.app_name.setText(self.get_warning(name))
-
-    def get_warning(self, app_name):
-        warning = f"Warning: You have reached your limit for {app_name} today."
-        return(warning)
+    def set_warning(self, app_name, time):
+        warning = f"Warning: You have reached your limit of {time}"\
+                  f" minutes for {app_name} today."
+        self.app_name.setText(warning)
 
     def accept(self):
         """
@@ -49,20 +47,21 @@ class Worker(QRunnable):
         timer = Screentime(self.logger)
         while True:
             blocked = timer.apply_limits()
-            for x in blocked:
-                self.block_app(x.lower(), timer, self.window)
+            for index, row in blocked.iterrows():
+                self.block_app(row.id.lower(), timer, self.window, row.limit)
             time.sleep(5)
 
-    def block_app(self, app_name: str, timer, window):
+    def block_app(self, app_name: str, timer, window, time):
         """ closes blocked apps """
         app_list = str(subprocess.check_output(['wmctrl', '-l'])).lower()
         if app_name.lower() in app_list:
-            self.window.set_name(app_name)
+            self.window.set_warning(app_name, time)
+            self.logger.info(f"Sending warning for {app_name}")
             response = self.window.exec_()
             if response == 1:
                 self.logger.info(f"Killed {app_name}")
                 subprocess.call(['notify-send',
-                                 f'Closing {app_name}. Limit already reached'])
+                                 f'Closing {app_name}. Time limit reached.'])
                 subprocess.Popen(["wmctrl", "-c", app_name], bufsize=0)
             elif response == 2:
                 timer.increase_limit(app_name)

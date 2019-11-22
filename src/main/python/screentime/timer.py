@@ -63,8 +63,8 @@ class Screentime():
               .sum()[['duration']]
               .reset_index())
         df.columns = ['id', 'duration']
+        df.duration /= 60
         df = df.astype({"id": str, "duration": int})
-        # df.columns /= 60
         df.id = df.id.str.lower()
         return df
 
@@ -74,13 +74,14 @@ class Screentime():
         restricted = pd.DataFrame.merge(self.config, df, how="left")
         blocked = restricted[(
             (restricted.limit < restricted.duration)
-        )]["id"]
+        )][["id", "limit"]]
         return blocked
 
     def increase_limit(self, app_name):
         df = self.get_times()
         duration_dict = df.set_index('id').to_dict()
         duration = duration_dict['duration'][app_name]
-        new_limit = duration + 15 * 60
+        new_limit = duration + 15
         self.config.loc[self.config['id'] == app_name, 'limit'] = new_limit
-        self.logger.info(f"Adding 15 minutes to {app_name}")
+        self.logger.info(f"Adding 15 minutes to {app_name}."
+                         f"The new limit is {new_limit} min.")
