@@ -5,6 +5,9 @@ all:
 	@echo "If you wish to install it system wide, type 'sudo make install'"
 	@echo "Uninstall with 'sudo make uninstall'"
 
+build:
+	fbs freeze
+# TODO update build process to install all dependencies
 install:
 	rm -rf ${PREFIX}/share/screentime
 	mkdir -p ${PREFIX}/share/screentime

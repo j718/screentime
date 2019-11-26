@@ -33,7 +33,7 @@ class Worker(QRunnable):
                 print(f"Sending warning for {app.id}")
                 response = self.closer.exec_()
                 if response == 1:
-                    self.print(f"Killed {app.id}")
+                    print(f"Killed {app.id}")
                     subprocess.call(['notify-send',
                                     f'Closing {app.id}. Time limit reached.'])
                     subprocess.Popen(["wmctrl", "-c", app.id], bufsize=0)
