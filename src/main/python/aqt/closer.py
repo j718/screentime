@@ -1,4 +1,5 @@
 from PyQt5 import QtWidgets, uic
+from PyQt5.QtCore import Qt
 
 
 class Closer(QtWidgets.QDialog):
@@ -7,6 +8,7 @@ class Closer(QtWidgets.QDialog):
         self.appctxt = appctxt
         self.app = appctxt.app
         self.form = self.appctxt.get_resource('closer.ui')
+        self.setWindowFlags(Qt.WindowStaysOnTopHint)
         uic.loadUi(self.form, self)
 
         # connect buttons
@@ -31,3 +33,4 @@ class Closer(QtWidgets.QDialog):
             meant to add fifteen minutes until attempting to kill again
         """
         self.done(2)
+        # TODO set to always on top
