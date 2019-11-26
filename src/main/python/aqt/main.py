@@ -1,8 +1,9 @@
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout
-from PyQt5.QtWebEngineWidgets import QWebEngineView
-import aqt.webview
-from PyQt5 import QtWidgets, uic
-import aqt.toolbar
+from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QSystemTrayIcon, QMenu, QAction
+import sys
+from PyQt5 import uic
+from aqt import about, worker
+from PyQt5.QtCore import QThreadPool
+
 
 class ScreentimeQt(QMainWindow):
     def __init__(self, appctxt):
@@ -10,41 +11,51 @@ class ScreentimeQt(QMainWindow):
 
         self.appctxt = appctxt
         self.app = appctxt.app
-        self.web = aqt.webview.STWebView()
         self.app.mw = self
-        self.setupMainWindow()
+        self.worker = worker.Worker(appctxt)
+        self.threadpool = QThreadPool()
+        self.threadpool.start(self.worker)
 
-    # def setupUI():
+        self.appctxt.app.setQuitOnLastWindowClosed(False)
+        self.appctxt.app.setApplicationName("Screentime")
 
+        self.setup_mw()
+        self.setup_tray()
 
-
-    # Main window setup
-    ##########################################################################
-
-    def setupMainWindow(self):
+    def setup_mw(self):
+        """
+        creates the main window of the application
+        """
         # main window
         self.form = self.appctxt.get_resource("mainwindow.ui")
-        # self.form.setupUi(self)
         uic.loadUi(self.form, self)
-        # toolbar
-        tweb = self.toolbarWeb = aqt.webview.STWebView()
-        tweb.title = "top toolbar"
-        self.toolbar = aqt.toolbar.Toolbar(self, tweb)
-        self.toolbar.draw()
-        # # main area
+
         # add in a layout
         self.mainLayout = QVBoxLayout()
-        self.mainLayout.setContentsMargins(0,0,0,0)
+        self.mainLayout.setContentsMargins(0, 0, 0, 0)
         self.mainLayout.setSpacing(0)
-        self.mainLayout.addWidget(tweb)
-        # self.mainLayout.addWidget(self.web)
-        # self.mainLayout.addWidget(sweb)
         self.centralwidget.setLayout(self.mainLayout)
+        self.setup_menus()
 
-    def setupMenus(self):
-        self.action_about.triggered(self.onAbout)
-        # TODO finish connecting about
+    def setup_menus(self):
+        self.action_about.triggered.connect(self.onAbout)
         # TODO finish designing about
 
     def onAbout(self):
+        dialog = about.About(self.appctxt)
+        dialog.exec_()
 
+    def setup_tray(self):
+        """
+        create the system tray icon
+        """
+        tray = QSystemTrayIcon(self.appctxt.app_icon, self.appctxt.app)
+        tray.setVisible(True)
+
+        # create tray menu
+        t_menu = QMenu()
+        exit_action = QAction('Exit Application', tray)
+        exit_action.setStatusTip('Exit the application.')
+        exit_action.triggered.connect(lambda: sys.exit(0))
+        t_menu.addAction(exit_action)
+        tray.setContextMenu(t_menu)

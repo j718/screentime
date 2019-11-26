@@ -19,11 +19,10 @@ home_dir = Path(HOME / '.config' / MODULE_NAME)
 
 
 class Screentime():
-    def __init__(self, logger):
+    def __init__(self):
         self.MODULE_NAME = MODULE_NAME
 
-        self.logger = logger
-        self.logger.info("Successfully Initialized")
+        print("Successfully Initialized")
 
         config_path = home_dir / "config.yml"
         if not config_path.exists():
@@ -32,7 +31,7 @@ class Screentime():
         if config_file:
             df_config = json_normalize(config_file)
         else:
-            self.logger.warning("Config file is empty")
+            print("Config file is empty")
             df_config = pd.DataFrame(columns=['id', 'limit'])
         df_config.columns = ['id', 'limit']
         df_config = df_config.astype({"id": str, "limit": int})
@@ -83,5 +82,5 @@ class Screentime():
         duration = duration_dict['duration'][app_name]
         new_limit = duration + 15
         self.config.loc[self.config['id'] == app_name, 'limit'] = new_limit
-        self.logger.info(f"Adding 15 minutes to {app_name}."
-                         f"The new limit is {new_limit} min.")
+        print(f"Adding 15 minutes to {app_name}."
+              f"The new limit is {new_limit} min.")
