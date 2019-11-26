@@ -6,10 +6,10 @@
     "configurations": [
 
         {
-            "name": "Python: Current File",
+            "name": "Python: Cli",
             "type": "python",
             "request": "launch",
-            "program": "${file}",
+            "program": "/home/jacob/github/screentime/src/main/python/cli.py",
             "console": "integratedTerminal"
         }
     ]

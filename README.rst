@@ -47,6 +47,18 @@ add bin item
 
 create block groups
 
+require on top
+
+add non python dependencies to install process
+
+show countown of limited apps from tray
+
+add a github pages
+
+add an about for tray
+
+make a prettier readme
+
 Credits
 -------
 
