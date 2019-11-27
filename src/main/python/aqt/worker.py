@@ -22,6 +22,7 @@ class Worker(QRunnable):
         while True:
             self.block_apps()
             time.sleep(10)
+            # TODO increase increment based on which is closest to rnning out
 
     def block_apps(self):
         """ closes blocked apps """
