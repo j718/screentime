@@ -5,4 +5,4 @@ Terminal=false
 Type=Application
 Icon=screentime
 Name=Screentime
-Exec=/usr/share/screentime/target/screentime/screentime
+Exec=sh -c "sleep 10 && /usr/share/screentime/target/screentime/screentime"

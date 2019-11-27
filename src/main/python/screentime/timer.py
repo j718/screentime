@@ -21,6 +21,12 @@ home_dir = Path(HOME / '.config' / MODULE_NAME)
 class Screentime():
     def __init__(self):
         self.MODULE_NAME = MODULE_NAME
+        self.root_url = "http://localhost:5600/api/"
+        assert requests.get(self.root_url).ok
+        self.bucket = [item for item in requests.get(self.root_url + "0/buckets").json()
+                  if 'aw-watcher-window' in item][0]
+
+        self.today = datetime.today().date()
 
         print("Successfully Initialized")
 
@@ -39,22 +45,12 @@ class Screentime():
         self.config = df_config
 
     def get_times(self):
-        root_url = "http://localhost:5600/api/"
-
-        # check if api is up
-        assert requests.get(root_url).ok
-
-        # retrieve pertinent bucket
-        bucket = [item for item in requests.get(root_url + "0/buckets").json()
-                  if 'aw-watcher-window' in item][0]
-
         # get today's history
-        history_url = root_url + f"0/buckets/{bucket}/events"
-        today = datetime.today().date()
+        history_url = self.root_url + f"0/buckets/{self.bucket}/events"
         history = [item
                    for item
                    in requests.get(history_url).json()
-                   if parse(item["timestamp"]).date() >= today]
+                   if parse(item["timestamp"]).date() >= self.today]
 
         # get todays apps and sum duration
         df = (json_normalize(history)

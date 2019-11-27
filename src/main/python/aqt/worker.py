@@ -21,7 +21,7 @@ class Worker(QRunnable):
     def run(self):
         while True:
             self.block_apps()
-            time.sleep(5)
+            time.sleep(10)
 
     def block_apps(self):
         """ closes blocked apps """

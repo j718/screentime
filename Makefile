@@ -8,6 +8,7 @@ all:
 build:
 	fbs freeze
 # TODO update build process to install all dependencies
+# TODO fix deskop files to allow tray icon and not delay startup including activitywatch
 install:
 	rm -rf ${PREFIX}/share/screentime
 	mkdir -p ${PREFIX}/share/screentime

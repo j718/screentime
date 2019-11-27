@@ -59,3 +59,5 @@ class ScreentimeQt(QMainWindow):
         exit_action.triggered.connect(lambda: sys.exit(0))
         t_menu.addAction(exit_action)
         tray.setContextMenu(t_menu)
+
+# TODO test that activity watch is running on startup
