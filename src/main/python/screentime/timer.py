@@ -2,6 +2,7 @@
 
 """Main module."""
 import os
+import json
 import yaml
 import requests
 from pathlib import Path
@@ -22,27 +23,14 @@ class Screentime():
     def __init__(self):
         self.MODULE_NAME = MODULE_NAME
         self.root_url = "http://localhost:5600/api/"
+        self.config_path = home_dir / "config.yml"
         assert requests.get(self.root_url).ok
         self.bucket = [item for item in requests.get(self.root_url + "0/buckets").json()
                   if 'aw-watcher-window' in item][0]
 
         self.today = datetime.today().date()
-
+        self.load_config()
         print("Successfully Initialized")
-
-        config_path = home_dir / "config.yml"
-        if not config_path.exists():
-            config_path.touch()
-        config_file = yaml.safe_load(config_path.open())
-        if config_file:
-            df_config = json_normalize(config_file)
-        else:
-            print("Config file is empty")
-            df_config = pd.DataFrame(columns=['id', 'limit'])
-        df_config.columns = ['id', 'limit']
-        df_config = df_config.astype({"id": str, "limit": int})
-        df_config.id = df_config.id.str.lower()
-        self.config = df_config
 
     def get_times(self):
         # get today's history
@@ -80,3 +68,28 @@ class Screentime():
         self.config.loc[self.config['id'] == app_name, 'limit'] = new_limit
         print(f"Adding 15 minutes to {app_name}."
               f"The new limit is {new_limit} min.")
+
+    def load_config(self):
+        if not self.config_path.exists():
+            self.config_path.touch()
+        config_file = yaml.safe_load(self.config_path.open())
+        if config_file:
+            df_config = json_normalize(config_file)
+        else:
+            print("Config file is empty")
+            df_config = pd.DataFrame(columns=['id', 'limit'])
+        df_config.columns = ['id', 'limit']
+        df_config = df_config.astype({"id": str, "limit": int})
+        df_config.id = df_config.id.str.lower()
+        self.config = df_config
+
+    def update_config(self, app_name, limit):
+        self.load_config()
+        update = pd.DataFrame([[app_name, limit]], columns=['id', 'limit'])
+        self.config = (pd.concat([self.config, update])
+                      .drop_duplicates(['id'] , keep='last')
+                      .reset_index(drop=True))
+        data = json.loads((self.config.to_json(orient="records")))
+        yaml.dump(data, self.config_path.open('w'), allow_unicode=True)
+        # TODO update appctxt to include screentime object and
+

@@ -1,4 +1,3 @@
-
 from PyQt5.QtCore import pyqtSlot, QRunnable
 from screentime.timer import Screentime
 import time

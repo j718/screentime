@@ -1,0 +1,6 @@
+- id: gnome-software
+  limit: 0
+- id: hyper
+  limit: 10
+- id: code
+  limit: 200

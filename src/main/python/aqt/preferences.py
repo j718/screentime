@@ -14,7 +14,7 @@ class Preferences(QtWidgets.QWidget):
         for app in self.get_apps():
             button = QPushButton(app)
             self.app = app
-            button.clicked.connect(self.get_preference_dialog)
+            button.clicked.connect(self.preference_decorator(app))
             self.formLayout.addRow(button)
         # self.formLayout.setContentsMargins(0,0,0,0)
 
@@ -24,6 +24,14 @@ class Preferences(QtWidgets.QWidget):
         return [app.get_display_name() for app in Gio.app_info_get_all()
                 if app.should_show()]
 
-    def get_preference_dialog(self, app_name: str):
-        dialog = preferencedialog.PreferenceDialog(self.appctxt, app_name)
-        dialog.exec_()
+    def preference_decorator(self, app_name):
+        ctxt = self.appctxt
+        def get_preference_dialog(self):
+            appctxt = ctxt
+            app = app_name
+            # TODO maybe get rid of this decorator approach
+            dialog = preferencedialog.PreferenceDialog(appctxt, app)
+            if dialog.exec_() == 1:
+                print(dialog.time_edit())
+                # TODO connect response from update to save and update config
+        return get_preference_dialog
