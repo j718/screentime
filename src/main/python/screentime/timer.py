@@ -1,29 +1,19 @@
 # -*- coding: utf-8 -*-
 
 """Main module."""
-import os
 import json
 import yaml
 import requests
-from pathlib import Path
 from datetime import datetime
 from dateutil.parser import parse
 from pandas.io.json import json_normalize
 import pandas as pd
 
-MAX_RESULTS = 1000
-
-xdg_path = [Path(x) for x in os.environ['XDG_DATA_DIRS'].split(':')]
-MODULE_NAME = 'screentime'
-HOME = Path(os.environ['HOME'])
-home_dir = Path(HOME / '.config' / MODULE_NAME)
-
 
 class Screentime():
-    def __init__(self):
-        self.MODULE_NAME = MODULE_NAME
+    def __init__(self, appctxt):
         self.root_url = "http://localhost:5600/api/"
-        self.config_path = home_dir / "config.yml"
+        self.config_path = appctxt.config_path
         assert requests.get(self.root_url).ok
         self.bucket = [item for item in requests.get(self.root_url + "0/buckets").json()
                   if 'aw-watcher-window' in item][0]

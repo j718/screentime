@@ -14,7 +14,7 @@ class Worker(QRunnable):
         self.appctxt = appctxt
         self.app = appctxt.app
         self.closer = Closer(self.appctxt)
-        self.timer = Screentime()
+        self.timer = Screentime(appctxt)
 
     @pyqtSlot()
     def run(self):
