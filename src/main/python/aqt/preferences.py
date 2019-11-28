@@ -47,4 +47,7 @@ class Preferences(QtWidgets.QWidget):
             })
         with self.appctxt.config_path.open('w') as f:
             yaml.dump(config_file, f)
-        # TODO update appctxt to include screentime object and
+        # TODO reload config after update
+        # TODO update show current limits in preference dialog
+        # TODO show current limits in preferences
+        # TODO make preference searchable
