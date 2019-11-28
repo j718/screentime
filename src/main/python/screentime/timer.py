@@ -62,7 +62,8 @@ class Screentime():
     def load_config(self):
         if not self.config_path.exists():
             self.config_path.touch()
-        config_file = yaml.safe_load(self.config_path.open())
+        with self.config_path.open() as f:
+            config_file = yaml.safe_load(f)
         if config_file:
             df_config = json_normalize(config_file)
         else:
@@ -72,14 +73,3 @@ class Screentime():
         df_config = df_config.astype({"id": str, "limit": int})
         df_config.id = df_config.id.str.lower()
         self.config = df_config
-
-    def update_config(self, app_name, limit):
-        self.load_config()
-        update = pd.DataFrame([[app_name, limit]], columns=['id', 'limit'])
-        self.config = (pd.concat([self.config, update])
-                      .drop_duplicates(['id'] , keep='last')
-                      .reset_index(drop=True))
-        data = json.loads((self.config.to_json(orient="records")))
-        yaml.dump(data, self.config_path.open('w'), allow_unicode=True)
-        # TODO update appctxt to include screentime object and
-
