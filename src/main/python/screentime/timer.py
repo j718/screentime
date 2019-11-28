@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 """Main module."""
-import json
 import yaml
 import requests
 from datetime import datetime
@@ -49,6 +48,7 @@ class Screentime():
             (restricted.limit < restricted.duration)
         )][["id", "limit"]]
         return blocked
+        # TODO update config file and timer format to have groups with lists of apps
 
     def increase_limit(self, app_name):
         df = self.get_times()

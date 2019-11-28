@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QSystemTrayIcon, QMenu, QAction
 import sys
 from PyQt5 import uic
-from aqt import about, worker, preferences
+from aqt import about, worker, preferences, dashboard
 from PyQt5.QtCore import QThreadPool
 
 
@@ -32,7 +32,7 @@ class ScreentimeQt(QMainWindow):
 
         # add in a layout
         # self.setCentralWidget(preferences.Preferences(self.appctxt))
-        self.verticalLayout.addWidget(preferences.Preferences(self.appctxt))
+        self.verticalLayout.addWidget(dashboard.Dashboard(self.appctxt))
         self.setup_menus()
 
     def setup_menus(self):
