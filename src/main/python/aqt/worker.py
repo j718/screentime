@@ -27,15 +27,15 @@ class Worker(QRunnable):
         """ closes blocked apps """
         blocked = self.timer.apply_limits()
         app_list = str(subprocess.check_output(['wmctrl', '-l']))
-        for index, app in blocked.iterrows():
-            if app.id.lower() in app_list.lower():
-                self.closer.set_warning(app.id, app.limit)
-                print(f"Sending warning for {app.id}")
+        for index, row in blocked.iterrows():
+            if row.app.lower() in app_list.lower():
+                self.closer.set_warning(row.app, row.time_limit)
+                print(f"Sending warning for {row.app}")
                 response = self.closer.exec_()
                 if response == 1:
-                    print(f"Killed {app.id}")
+                    print(f"Killed {row.app}")
                     subprocess.call(['notify-send',
-                                    f'Closing {app.id}. Time limit reached.'])
-                    subprocess.Popen(["wmctrl", "-c", app.id], bufsize=0)
+                                    f'Closing {row.app}. Time limit reached.'])
+                    subprocess.Popen(["wmctrl", "-c", row.app], bufsize=0)
                 elif response == 2:
-                    self.timer.increase_limit(app.id)
+                    self.timer.increase_limit(row.app)
