@@ -52,12 +52,11 @@ class Screentime():
         # TODO update config file and timer format to have groups with lists of apps
 
     def increase_limit(self, app_name):
-        # TODO update increase limit for new setup
         df = self.get_times()
         duration_dict = df.set_index('app').to_dict()
         duration = duration_dict['duration'][app_name]
         new_limit = duration + 15
-        self.config.loc[self.config['app'] == app_name, 'limit'] = new_limit
+        self.config.loc[self.config['app'] == app_name, 'time_limit'] = new_limit
         print(f"Adding 15 minutes to {app_name}."
               f"The new limit is {new_limit} min.")
 
