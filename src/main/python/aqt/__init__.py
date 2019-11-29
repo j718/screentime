@@ -1,18 +1,24 @@
 from .main import ScreentimeQt
-from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from .stapplicationcontext import STApplicationContext
 from pathlib import Path
 import os
 
 MAX_RESULTS = 1000
-
+TESTING = True
 MODULE_NAME = 'screentime'
 HOME = Path(os.environ['HOME'])
-home_dir = Path(HOME / '.config' / MODULE_NAME)
-config_path = home_dir / 'config.yml'
+if TESTING:
+    aqt_dir = Path(os.path.dirname(os.path.abspath(__file__)))
+    home_dir = aqt_dir.parent.parent.parent.parent / 'test_data'
+    if not home_dir.exists():
+        home_dir.mkdir()
+else:
+    home_dir = Path(HOME / '.config' / MODULE_NAME)
+config_path = home_dir / 'data.sql'
+
 
 def run():
-    appctxt = STApplicationContext(config_path)
+    appctxt = STApplicationContext(config_path, TESTING)
     mw = ScreentimeQt(appctxt)
     mw.show()
     # app.exec_()

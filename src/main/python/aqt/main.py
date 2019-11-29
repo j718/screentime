@@ -1,17 +1,17 @@
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QSystemTrayIcon, QMenu, QAction
 import sys
 from PyQt5 import uic
-from aqt import about, worker, preferences, dashboard
+from aqt import about, worker, preferences, dashboard, db
 from PyQt5.QtCore import QThreadPool
 
 
 class ScreentimeQt(QMainWindow):
     def __init__(self, appctxt):
         super().__init__()
-
         self.appctxt = appctxt
         self.app = appctxt.app
         self.app.mw = self
+        self.db = db.Database(appctxt).connection
         self.worker = worker.Worker(appctxt)
         self.threadpool = QThreadPool()
         self.threadpool.start(self.worker)
