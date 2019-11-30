@@ -4,7 +4,7 @@ from pathlib import Path
 import os
 
 MAX_RESULTS = 1000
-TESTING = True
+TESTING = os.environ.get("ST_TESTING", default=False) == 'TRUE'
 MODULE_NAME = 'screentime'
 HOME = Path(os.environ['HOME'])
 if TESTING:
@@ -13,7 +13,7 @@ if TESTING:
     if not home_dir.exists():
         home_dir.mkdir()
 else:
-    home_dir = Path(HOME / '.config' / MODULE_NAME)
+    home_dir = Path(HOME / '.local/share' / MODULE_NAME)
 config_path = home_dir / 'data.sql'
 
 

@@ -40,6 +40,7 @@ class Preferences(QtWidgets.QDialog):
         self.delete_button.clicked.connect(self.delete)
         self.search_bar.textChanged.connect(self.filter_search_bar)
 
+        # TODO set new database location for deployment
         # TODO improve menubar
 
         self.show()

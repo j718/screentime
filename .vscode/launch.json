@@ -5,12 +5,22 @@
     "version": "0.2.0",
     "configurations": [
 
+
+
         {
-            "name": "Python: Cli",
+            "name": "Testing",
             "type": "python",
             "request": "launch",
             "program": "/home/jacob/github/screentime/src/main/python/main.py",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "env": {"ST_TESTING":"TRUE"},
+        },
+        {
+            "name": "Prod",
+            "type": "python",
+            "request": "launch",
+            "program": "/home/jacob/github/screentime/src/main/python/main.py",
+            "console": "integratedTerminal",
         }
     ]
 }
