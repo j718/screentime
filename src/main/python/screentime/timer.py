@@ -42,7 +42,6 @@ class Screentime():
 
     def apply_limits(self):
         # manage config file
-        # TODO add ability to delete limit group
         df_times = self.get_times()
         df_master = pd.DataFrame.merge(self.appctxt.config, df_times, how="left")
         df_groups = (df_master
