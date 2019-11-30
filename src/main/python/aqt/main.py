@@ -11,7 +11,8 @@ class ScreentimeQt(QMainWindow):
         self.appctxt = appctxt
         self.app = appctxt.app
         self.app.mw = self
-        appctxt.db = db.Database(appctxt).connection
+        appctxt.db = db.Database(appctxt)
+        appctxt.db.update_config()
         self.worker = worker.Worker(appctxt)
         self.threadpool = QThreadPool()
         self.threadpool.start(self.worker)

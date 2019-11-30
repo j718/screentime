@@ -29,7 +29,7 @@ class Worker(QRunnable):
         app_list = str(subprocess.check_output(['wmctrl', '-l']))
         for index, row in blocked.iterrows():
             if row.app.lower() in app_list.lower():
-                self.closer.set_warning(row.app, row.time_limit)
+                self.closer.set_warning(row.title, row.time_limit)
                 print(f"Sending warning for {row.app}")
                 response = self.closer.exec_()
                 if response == 1:

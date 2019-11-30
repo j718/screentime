@@ -1,5 +1,6 @@
 import sqlite3
 from pathlib import Path
+import pandas as pd
 # TODO add testing mode to cli.py
 # TODO change timer to make requests to database
 # TODO change preferences to make requests to database
@@ -33,3 +34,19 @@ class Database():
         self.init_connection()
         with open(self.appctxt.get_resource('schema.sql')) as f:
             self.connection.executescript(f.read())
+
+    def update_config(self):
+        query = """
+SELECT
+    LIMIT_GROUP.TITLE,
+    LIMIT_GROUP.TIME_LIMIT as time_limit,
+    APP.TITLE AS app
+FROM
+    LIMIT_GROUP
+JOIN LIMIT_ITEM ON
+    LIMIT_GROUP.ID = LIMIT_ITEM.LIMIT_GROUP_ID
+JOIN APP ON
+    APP.ID = LIMIT_ITEM.APP_ID"""
+        config = pd.read_sql_query(query, self.connection)
+        config.app = config.app.str.lower()
+        self.appctxt.config = config

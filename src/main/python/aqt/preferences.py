@@ -3,20 +3,38 @@ import pandas as pd
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout
 from gi.repository import Gio
+from PyQt5.QtWidgets import QTreeWidget, QTreeWidgetItem, QApplication, QCheckBox, QWidget
+from PyQt5.QtCore import Qt, QVariant
+from PyQt5.QtGui import QStandardItemModel, QStandardItem
+
 from aqt import preferencedialog
 
 
 
-class Preferences(QtWidgets.QWidget):
-    def __init__(self, appctxt):
+class Preferences(QtWidgets.QDialog):
+    def __init__(self, appctxt, group=None):
         super().__init__()
         self.appctxt = appctxt
+        self.con = self.appctxt.db.connection
         uic.loadUi(appctxt.get_resource("preferences.ui"), self)
+
+        # TODO add limit time to limit group line eidt
+        # TODO refresh config at beginning of day
+        self.group = group
+        if self.group:
+            # get a list of apps for group
+            self.apps = self.appctxt.config[self.appctxt.config['title'] == group].app.str.lower().tolist()
+
         for app in self.get_apps():
-            button = QPushButton(app)
-            button.clicked.connect(lambda checked, app=app: self.get_preference_dialog(app))
-            self.formLayout.addRow(button)
-        # self.formLayout.setContentsMargins(0,0,0,0)
+            cb = QCheckBox(app, self)
+            if group:
+                if app.lower() in self.apps:
+                    cb.setChecked(True)
+            self.formLayout.addRow(cb)
+        self.accept_button.clicked.connect(self.accept)
+        # TODO fix apply limits to work based on entire group time
+        # TODO improve filter bar in preferences
+        # TODO improve menubar
 
         self.show()
 
@@ -29,25 +47,104 @@ class Preferences(QtWidgets.QWidget):
         dialog = preferencedialog.PreferenceDialog(self.appctxt, app_name)
         if dialog.exec_() == 1:
             self.update_config(dialog.app_name, dialog.time_edit.text())
+            # TODO make it so that a new group can be added from preference window
+            # TODO make it so that list is in a tree view
+            # TODO show existing preferences in dialog for group
             # TODO connect response from update to save and update config
 
-    def update_config(self, app_name, limit):
-        with self.appctxt.config_path.open('r') as f:
-            config_file = yaml.safe_load(f)
-        found = False
-        for app in config_file:
-            if app['id'] == app_name:
-                found = True
-                app['limit'] = int(limit)
-
-        if not found:
-            config_file.append({
-                'id':app_name,
-                'limit':int(limit)
-            })
-        with self.appctxt.config_path.open('w') as f:
-            yaml.dump(config_file, f)
         # TODO reload config after update
         # TODO update show current limits in preference dialog
         # TODO show current limits in preferences
         # TODO make preference searchable
+
+    def accept(self):
+        """
+        invoked by clicking the add time button on the dialog.
+
+        """
+        # returns app name of all checked boxes
+        boxes = ([self.formLayout.itemAt(i).widget().text()
+                  for i in range(self.formLayout.count())
+                  if self.formLayout.itemAt(i).widget().isChecked()]
+        )
+
+        # get limit
+        limit = self.time_limit.text()
+
+        # create new group title
+        name_limit = 3 if len(boxes) >= 3 else len(boxes)
+        if name_limit < len(boxes):
+            title = ", ".join(boxes[:2]) + f" and {len(boxes) - name_limit} others."
+        else:
+            title = ", ".join(boxes)
+
+        # get and update or create limit group
+        if not self.group:
+            # add new group to database
+            query = f"""
+INSERT INTO limit_group (title, time_limit)
+VALUES ('{title}', {limit});
+"""
+            self.con.execute(query)
+            self.con.commit()
+
+            # get id of the new group
+            query = """
+SELECT last_insert_rowid() FROM limit_group;
+"""
+            group_id = self.con.execute(query).lastrowid
+        else:
+            # get group id
+            query = f"""
+SELECT id FROM limit_group WHERE title = '{self.group}';
+"""
+            group_id = [x for x, in self.appctxt.db.connection.execute(query)][0]
+
+            # update group time
+            query = f"""
+UPDATE limit_group
+SET time_limit = {limit}, title = '{title}'
+WHERE id = {group_id};
+"""
+            self.con.execute(query)
+            self.con.commit()
+
+        # add new apps to db
+        for app in boxes:
+            query = f"""
+INSERT OR IGNORE INTO app (title) VALUES('{app}');
+"""
+            self.con.execute(query)
+            self.con.commit()
+
+        # get ids of apps for group
+        boxes_sql = ', '.join([f"'{x.lower()}'" for x in boxes])
+        query = f"""
+SELECT
+    ID
+FROM
+    APP
+WHERE
+    lower(title) in ({boxes_sql})
+
+    """
+        response = self.con.execute(query).fetchall()
+        app_ids = [x for x, in response]
+
+        # remove then add ids to lookup table
+        query = f"""
+DELETE FROM limit_item
+WHERE limit_group_id = {group_id};
+"""
+        self.con.execute(query)
+        self.con.commit()
+
+        for app_id in app_ids:
+            query = f"""
+INSERT OR IGNORE INTO limit_item (app_id, limit_group_id)
+VALUES ('{app_id}','{group_id}')
+"""
+            self.con.execute(query)
+            self.con.commit()
+        self.appctxt.db.update_config()
+        self.done(1)

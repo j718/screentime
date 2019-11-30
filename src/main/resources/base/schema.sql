@@ -14,10 +14,12 @@ create table limit_item(
     app_id integer not null,
     limit_group_id integer not null,
     foreign key (app_id) references app (id),
-    foreign key (limit_group_id) references limit_group (id)
+    foreign key (limit_group_id) references limit_group (id),
+    UNIQUE (app_id, limit_group_id)
 );
 
 create table app(
     id integer primary key AUTOINCREMENT,
-    title text not null
+    title text not null,
+    UNIQUE(title)
 );

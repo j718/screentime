@@ -38,11 +38,16 @@
         <height>211</height>
        </rect>
       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <layout class="QFormLayout" name="formLayout"/>
+       </item>
+      </layout>
      </widget>
     </widget>
    </item>
    <item>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="add_button">
      <property name="text">
       <string>Add Limits</string>
      </property>
