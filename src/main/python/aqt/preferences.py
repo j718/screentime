@@ -52,14 +52,13 @@ class Preferences(QtWidgets.QDialog):
 
         for i in range(self.formLayout.count()):
             box = self.formLayout.itemAt(i).widget()
-            if filter in box.text().lower():
+            if filter.lower() in box.text().lower():
                 box.show()
             else:
                 box.hide()
 
     def get_apps(self):
-        return [app.get_display_name() for app in Gio.app_info_get_all()
-                if app.should_show()]
+        return [app.get_display_name() for app in Gio.app_info_get_all()]
 
             # TODO add time limit to dashboard widget ubttons
 

@@ -14,6 +14,8 @@ if TESTING:
         home_dir.mkdir()
 else:
     home_dir = Path(HOME / '.local/share' / MODULE_NAME)
+    if not home_dir.exists():
+        home_dir.mkdir()
 config_path = home_dir / 'data.sql'
 
 

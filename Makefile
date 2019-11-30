@@ -10,7 +10,6 @@ build:
 # TODO update build process to install all dependencies
 # TODO fix deskop files to allow tray icon and not delay startup including activitywatch
 install:
-	rm -rf ${PREFIX}/share/screentime
 	mkdir -p ${PREFIX}/share/screentime
 	cp -av target ${PREFIX}/share/screentime/
 	install -m 0644 src/main/icons/linux/512.png ${PREFIX}/share/pixmaps/screentime.png
