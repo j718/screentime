@@ -30,15 +30,11 @@ class ScreentimeQt(QMainWindow):
         # main window
         self.form = self.appctxt.get_resource("mainwindow.ui")
         uic.loadUi(self.form, self)
-
-        # add in a layout
-        # self.setCentralWidget(preferences.Preferences(self.appctxt))
         self.verticalLayout.addWidget(dashboard.Dashboard(self.appctxt))
         self.setup_menus()
 
     def setup_menus(self):
         self.action_about.triggered.connect(self.onAbout)
-        # TODO finish designing about
 
     def onAbout(self):
         dialog = about.About(self.appctxt)

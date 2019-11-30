@@ -2,8 +2,6 @@ import sqlite3
 from pathlib import Path
 import pandas as pd
 # TODO add testing mode to cli.py
-# TODO change timer to make requests to database
-# TODO change preferences to make requests to database
 
 
 class Database():

@@ -56,7 +56,6 @@ class Screentime():
 
         df_groups = df_groups[df_groups.time_limit <= df_groups.duration]
         return df_groups
-        # TODO update config file and timer format to have groups with lists of apps
 
     def increase_limit(self, app_name):
         df = self.get_times()

@@ -19,7 +19,6 @@ class Preferences(QtWidgets.QDialog):
         uic.loadUi(appctxt.get_resource("preferences.ui"), self)
 
         # TODO add limit time to limit group line eidt
-        # TODO refresh config at beginning of day
         self.group = group
         if self.group:
             # get a list of apps for group
@@ -32,7 +31,6 @@ class Preferences(QtWidgets.QDialog):
                     cb.setChecked(True)
             self.formLayout.addRow(cb)
         self.accept_button.clicked.connect(self.accept)
-        # TODO fix apply limits to work based on entire group time
         # TODO improve filter bar in preferences
         # TODO improve menubar
 
@@ -43,19 +41,10 @@ class Preferences(QtWidgets.QDialog):
                 if app.should_show()]
 
     def get_preference_dialog(self, app_name):
-        # TODO maybe get rid of this decorator approach
         dialog = preferencedialog.PreferenceDialog(self.appctxt, app_name)
         if dialog.exec_() == 1:
             self.update_config(dialog.app_name, dialog.time_edit.text())
-            # TODO make it so that a new group can be added from preference window
-            # TODO make it so that list is in a tree view
-            # TODO show existing preferences in dialog for group
-            # TODO connect response from update to save and update config
-
-        # TODO reload config after update
-        # TODO update show current limits in preference dialog
-        # TODO show current limits in preferences
-        # TODO make preference searchable
+            # TODO add time limit to dashboard widget ubttons
 
     def accept(self):
         """
