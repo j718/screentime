@@ -18,8 +18,17 @@ class Preferences(QtWidgets.QDialog):
         uic.loadUi(appctxt.get_resource("preferences.ui"), self)
 
         # TODO add limit time to limit group line eidt
+
+
         self.group = group
         if self.group:
+            # add time limit to limit group line edit
+            query = f"""
+    SELECT time_limit FROM limit_group WHERE title = '{self.group}';
+    """
+            limit = [x for x, in self.appctxt.db.connection.execute(query)][0]
+            self.time_limit.setText(str(limit))
+
             # get a list of apps for group
             self.apps = self.appctxt.config[self.appctxt.config['title'] == group].app.str.lower().tolist()
 
@@ -35,6 +44,8 @@ class Preferences(QtWidgets.QDialog):
 
         self.show()
 
+    # TODO make added time persist between updates
+    # TODO make sure that time is only increased in group that ran out for app
     def get_apps(self):
         return [app.get_display_name() for app in Gio.app_info_get_all()
                 if app.should_show()]
