@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """Tests for `screentime` package."""
-from screentime.timer import Screentime, HOME, MODULE_NAME
+from utils.timer import Screentime, HOME, MODULE_NAME
 import requests
 import logging
 

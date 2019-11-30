@@ -19,7 +19,7 @@ class Screentime():
                   if 'aw-watcher-window' in item][0]
 
         self.today = datetime.today().date()
-        print("Successfully Initialized")
+        self.appctxt.logger.info("Successfully Initialized")
 
     def get_times(self):
         # get today's history
@@ -62,6 +62,6 @@ class Screentime():
         duration = duration_dict['duration'][app_name]
         new_limit = duration + 15
         self.appctxt.config.loc[self.appctxt.config['app'] == app_name, 'time_limit'] = new_limit
-        print(f"Adding 15 minutes to {app_name}."
+        self.appctxt.logger.info(f"Adding 15 minutes to {app_name}."
               f"The new limit is {new_limit} min.")
 

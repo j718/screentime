@@ -8,8 +8,6 @@ from PyQt5.QtCore import Qt, QVariant
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
 
-# TODO increase size of warning dialog
-# TODO add open preference button to tile menu
 class Preferences(QtWidgets.QDialog):
     def __init__(self, appctxt, group=None):
         super().__init__()
@@ -40,21 +38,28 @@ class Preferences(QtWidgets.QDialog):
             self.formLayout.addRow(cb)
         self.accept_button.clicked.connect(self.accept)
         self.delete_button.clicked.connect(self.delete)
-        # TODO improve filter bar in preferences
+        self.search_bar.textChanged.connect(self.filter_search_bar)
+
         # TODO improve menubar
 
         self.show()
 
     # TODO make added time persist between updates
     # TODO make sure that time is only increased in group that ran out for app
+    def filter_search_bar(self):
+        filter = self.search_bar.text().lower()
+
+        for i in range(self.formLayout.count()):
+            box = self.formLayout.itemAt(i).widget()
+            if filter in box.text().lower():
+                box.show()
+            else:
+                box.hide()
+
     def get_apps(self):
         return [app.get_display_name() for app in Gio.app_info_get_all()
                 if app.should_show()]
 
-    def get_preference_dialog(self, app_name):
-        dialog = preferencedialog.PreferenceDialog(self.appctxt, app_name)
-        if dialog.exec_() == 1:
-            self.update_config(dialog.app_name, dialog.time_edit.text())
             # TODO add time limit to dashboard widget ubttons
 
     def delete(self):

@@ -25,7 +25,7 @@ class Database():
         if self.flagConnOpen:
             self.connection.close()
             self.flagConnOpen = False
-        print("Closed connection")
+        self.appcxt.logger.info("Closed connection")
         # TODO add logger to appctxt
 
     def init_db(self):

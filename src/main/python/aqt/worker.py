@@ -1,5 +1,5 @@
 from PyQt5.QtCore import pyqtSlot, QRunnable
-from screentime.timer import Screentime
+from utils.timer import Screentime
 import time
 import subprocess
 from aqt.closer import Closer
@@ -30,10 +30,10 @@ class Worker(QRunnable):
         for index, row in blocked.iterrows():
             if row.app.lower() in app_list.lower():
                 self.closer.set_warning(row.title, row.time_limit)
-                print(f"Sending warning for {row.app}")
+                self.appctxt.logger.info(f"Sending warning for {row.app}")
                 response = self.closer.exec_()
                 if response == 1:
-                    print(f"Killed {row.app}")
+                    self.appctxt.logger.info(f"Killed {row.app}")
                     subprocess.call(['notify-send',
                                     f'Closing {row.app}. Time limit reached.'])
                     subprocess.Popen(["wmctrl", "-c", row.app], bufsize=0)

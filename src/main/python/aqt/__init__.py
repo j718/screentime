@@ -1,5 +1,5 @@
 from .main import ScreentimeQt
-from .stapplicationcontext import STApplicationContext
+from utils.stapplicationcontext import STApplicationContext
 from pathlib import Path
 import os
 
