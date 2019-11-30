@@ -16,7 +16,7 @@ class Closer(QtWidgets.QDialog):
         self.add_button.clicked.connect(self.add)
 
     def set_warning(self, app_name: str, time: str):
-        warning = f"Warning: You have reached your limit of {time}"\
+        warning = f"Reached limit of {time}"\
                     f" minutes for {app_name} today."
         self.app_name.setText(warning)
 

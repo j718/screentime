@@ -7,10 +7,9 @@ from PyQt5.QtWidgets import QTreeWidget, QTreeWidgetItem, QApplication, QCheckBo
 from PyQt5.QtCore import Qt, QVariant
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
-from aqt import preferencedialog
 
-
-
+# TODO increase size of warning dialog
+# TODO add open preference button to tile menu
 class Preferences(QtWidgets.QDialog):
     def __init__(self, appctxt, group=None):
         super().__init__()
