@@ -39,6 +39,7 @@ class Preferences(QtWidgets.QDialog):
                     cb.setChecked(True)
             self.formLayout.addRow(cb)
         self.accept_button.clicked.connect(self.accept)
+        self.delete_button.clicked.connect(self.delete)
         # TODO improve filter bar in preferences
         # TODO improve menubar
 
@@ -55,6 +56,16 @@ class Preferences(QtWidgets.QDialog):
         if dialog.exec_() == 1:
             self.update_config(dialog.app_name, dialog.time_edit.text())
             # TODO add time limit to dashboard widget ubttons
+
+    def delete(self):
+        if self.group:
+            query = f"""
+    DELETE FROM limit_group
+    WHERE title = '{self.group}';
+    """
+            self.con.execute(query)
+            self.con.commit()
+        self.done(1)
 
     def accept(self):
         """
