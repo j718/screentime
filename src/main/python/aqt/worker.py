@@ -46,4 +46,3 @@ class Worker(QRunnable):
                     os.kill(app.get_pid(), signal.SIGKILL)
                 elif response == 2:
                     self.timer.increase_limit(app.get_name().lower())
-                    # TODO show time limit in closer dialog

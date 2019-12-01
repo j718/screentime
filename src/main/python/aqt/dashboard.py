@@ -10,7 +10,6 @@ class Dashboard(QtWidgets.QWidget):
         uic.loadUi(self.appctxt.get_resource("dashboard.ui"), self)
         self.add_button.clicked.connect(self.get_preference_dialog)
         self.draw()
-        # TODO make it so that title of dialog is the app name
         # TODO make it so that time on apps resets at beginning of day
 
     def draw(self):

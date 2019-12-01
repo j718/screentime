@@ -18,9 +18,6 @@ class Preferences(QtWidgets.QDialog):
         uic.loadUi(appctxt.get_resource("preferences.ui"), self)
         self.setWindowTitle("Preferences - Screentime")
 
-        # TODO add limit time to limit group line eidt
-
-
         self.group = group
         if self.group:
             # add time limit to limit group line edit
@@ -43,11 +40,6 @@ class Preferences(QtWidgets.QDialog):
         self.delete_button.clicked.connect(self.delete)
         self.search_bar.textChanged.connect(self.filter_search_bar)
 
-        # TODO set new database location for deployment
-        # TODO improve menubar
-
-        # self.show()
-
     # TODO make added time persist between updates
     # TODO make sure that time is only increased in group that ran out for app
     def filter_search_bar(self):
@@ -61,9 +53,14 @@ class Preferences(QtWidgets.QDialog):
                 box.hide()
 
     def get_apps(self):
-        self.appctxt.logger.info(os.environ['XDG_DATA_DIRS'])
-        data_dirs = list(set([Path(x) / 'applications' for x in os.environ['XDG_DATA_DIRS'].split(":")]))
-        self.appctxt.logger.info(data_dirs)
+        home = os.environ['HOME']
+        data_dirs = list(set((home + "/.local/share/flatpak/exports/share/"
+                                ":/var/lib/flatpak/exports/share/"
+                                ":/usr/local/share/:/usr/share/"
+                                ":/var/lib/snapd/desktop:"
+                                + os.environ['XDG_DATA_DIRS']).split(':')))
+
+        data_dirs = [Path(x) / 'applications' for x in data_dirs]
         apps = []
         for a in data_dirs:
             if a.exists():
