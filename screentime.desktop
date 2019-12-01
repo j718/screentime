@@ -6,3 +6,4 @@ Type=Application
 Icon=screentime
 Name=Screentime
 Exec=sh -c "sleep 10 && /usr/share/screentime/target/screentime/screentime"
+Comment= ANn app for limiting usage of specific app groups
