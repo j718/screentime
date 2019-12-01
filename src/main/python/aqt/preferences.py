@@ -43,7 +43,7 @@ class Preferences(QtWidgets.QDialog):
         # TODO set new database location for deployment
         # TODO improve menubar
 
-        self.show()
+        # self.show()
 
     # TODO make added time persist between updates
     # TODO make sure that time is only increased in group that ran out for app
