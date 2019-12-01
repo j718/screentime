@@ -18,6 +18,7 @@ pyqt5 = "==5.9.2"
 fbs = "*"
 gobject = "*"
 pygobject = "*"
+psutil = "*"
 
 [requires]
 python_version = "3.6.3"

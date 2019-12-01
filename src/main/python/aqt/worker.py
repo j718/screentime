@@ -3,6 +3,9 @@ from utils.timer import Screentime
 import time
 import subprocess
 from aqt.closer import Closer
+import signal
+import os
+from gi.repository import Wnck
 
 
 class Worker(QRunnable):
@@ -15,6 +18,8 @@ class Worker(QRunnable):
         self.app = appctxt.app
         self.closer = Closer(self.appctxt)
         self.timer = Screentime(appctxt)
+        self.screen = Wnck.Screen.get_default()
+        self.screen.force_update()
 
     @pyqtSlot()
     def run(self):
@@ -26,16 +31,19 @@ class Worker(QRunnable):
     def block_apps(self):
         """ closes blocked apps """
         blocked = self.timer.apply_limits()
-        app_list = str(subprocess.check_output(['wmctrl', '-l']))
-        for index, row in blocked.iterrows():
-            if row.app.lower() in app_list.lower():
-                self.closer.set_warning(row.title, row.time_limit)
-                self.appctxt.logger.info(f"Sending warning for {row.app}")
+        app_list = [x.get_application() for x in self.screen.get_windows()]
+
+        app_names = [x.get_name() for x in app_list]
+        for app in app_list:
+            if blocked.app.str.lower().isin([app.get_name().lower()]).any():
+                # self.closer.set_warning(row.title, row.time_limit)
+                self.closer.set_warning(app.get_name(), "")
+                self.appctxt.logger.info(f"Sending warning for {app.get_name()}")
                 response = self.closer.exec_()
                 if response == 1:
-                    self.appctxt.logger.info(f"Killed {row.app}")
+                    self.appctxt.logger.info(f"Killed {app.get_name()}")
                     subprocess.call(['notify-send',
-                                    f'Closing {row.app}. Time limit reached.'])
-                    subprocess.Popen(["wmctrl", "-c", row.app], bufsize=0)
+                                    f'Closing {app.get_name()}. Time limit reached.'])
+                    os.kill(app.get_pid(), signal.SIGKILL)
                 elif response == 2:
-                    self.timer.increase_limit(row.app)
+                    self.timer.increase_limit(app.get_name().lower())
