@@ -5,6 +5,8 @@ all:
 	@echo "If you wish to install it system wide, type 'sudo make install'"
 	@echo "Uninstall with 'sudo make uninstall'"
 
+clean:
+	rm -rf target build dist
 build:
 	fbs freeze
 # TODO update build process to install all dependencies

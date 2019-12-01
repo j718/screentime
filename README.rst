@@ -13,16 +13,30 @@ Demo
 -------------
 .. image:: demo.gif
 
-Prerequisites
+Installation
 ---------------
-    wmctrl, activitywatcher
+Install Prerequisites:
+
+- activitywatcher
+
+Clone, Build, and Install::
+
+    git clone git@github.com:j718/screentime.git
+    make build
+    sudo make install
+
+Uninstallation::
+
+    sudo make uninstall
 
 Features
 --------
 
 - Create time limits for desktop applications
 
-add a github pages
+Roadmap
+-----------
+- add a github pages
 
 
 Credits
