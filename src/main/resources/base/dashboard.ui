@@ -15,16 +15,6 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
-    <widget class="QCheckBox" name="checkBox">
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="text">
-      <string>App Limits</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QScrollArea" name="limits_scroll_area">
      <property name="widgetResizable">
       <bool>true</bool>
@@ -35,7 +25,7 @@
         <x>0</x>
         <y>0</y>
         <width>384</width>
-        <height>211</height>
+        <height>242</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">

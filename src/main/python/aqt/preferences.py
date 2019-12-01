@@ -2,11 +2,13 @@ import yaml
 import pandas as pd
 from PyQt5 import QtWidgets, uic
 from PyQt5.QtWidgets import QApplication, QWidget, QScrollArea, QVBoxLayout, QGroupBox, QLabel, QPushButton, QFormLayout
-from gi.repository import Gio
 from PyQt5.QtWidgets import QTreeWidget, QTreeWidgetItem, QApplication, QCheckBox, QWidget
 from PyQt5.QtCore import Qt, QVariant
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
+import os
+from pathlib import Path
 
+# get all data dris removing duplicates and checking if they exist
 
 class Preferences(QtWidgets.QDialog):
     def __init__(self, appctxt, group=None):
@@ -58,7 +60,18 @@ class Preferences(QtWidgets.QDialog):
                 box.hide()
 
     def get_apps(self):
-        return [app.get_display_name() for app in Gio.app_info_get_all()]
+        data_dirs = list(set([Path(x) / 'applications' for x in os.environ['XDG_DATA_DIRS'].split(":")]))
+        apps = []
+        for a in data_dirs:
+            if a.exists():
+                for b in a.iterdir():
+                    text = b.read_text().splitlines()
+                    if "NoDisplay=true" not in text:
+                        for c in text:
+                            if "Name=" in c:
+                                apps.append(c.split("Name=")[1])
+        apps = list(set(apps))
+        return apps
 
             # TODO add time limit to dashboard widget ubttons
 

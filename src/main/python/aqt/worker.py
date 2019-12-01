@@ -32,7 +32,6 @@ class Worker(QRunnable):
         """ closes blocked apps """
         blocked = self.timer.apply_limits()
         app_list = [x.get_application() for x in self.screen.get_windows()]
-
         app_names = [x.get_name() for x in app_list]
         for app in app_list:
             if blocked.app.str.lower().isin([app.get_name().lower()]).any():
@@ -47,3 +46,4 @@ class Worker(QRunnable):
                     os.kill(app.get_pid(), signal.SIGKILL)
                 elif response == 2:
                     self.timer.increase_limit(app.get_name().lower())
+                    # TODO show time limit in closer dialog

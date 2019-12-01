@@ -34,19 +34,13 @@
      <height>29</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuTest">
-    <property name="title">
-     <string>Test</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuHere">
+   <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
     <addaction name="action_about"/>
    </widget>
-   <addaction name="menuTest"/>
-   <addaction name="menuHere"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_about">
