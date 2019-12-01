@@ -23,3 +23,11 @@ create table app(
     title text not null,
     UNIQUE(title)
 );
+
+CREATE TABLE limit_increase(
+    id integer primary key AUTOINCREMENT,
+    day date,
+    time_limit integer not null,
+    limit_group_id integer not null,
+    foreign key (limit_group_id) references limit_group (id)
+);

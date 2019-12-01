@@ -56,12 +56,29 @@ class Screentime():
         df_groups = df_groups[df_groups.time_limit <= df_groups.duration]
         return df_groups
 
-    def increase_limit(self, app_name):
-        df = self.get_times()
-        duration_dict = df.set_index('app').to_dict()
-        duration = duration_dict['duration'][app_name]
-        new_limit = duration + 15
-        self.appctxt.config.loc[self.appctxt.config['app'] == app_name, 'time_limit'] = new_limit
-        self.appctxt.logger.info(f"Adding 15 minutes to {app_name}."
-              f"The new limit is {new_limit} min.")
+#     def increase_limit(self, group_name):
+#         query = f"""
+# SELECT id  FROM limit_group WHERE title = {group_name}
+# """
+#         group_id = [x for x, in self.con.execute(query)][0]
+
+#         query = f"""
+# SELECT MAX(time_limit) from limit_increase where limit_group_id = {group_id}
+# """
+#         max = [x for x, in self.con.execute(query)][0]
+
+#         # increase max
+#         new_limit = 15 + max
+#         today = datetime.now()
+
+#         query = f"""
+# INSERT INTO limit_increase (day, time_limit, limit_group_id)
+# VALUES ('{today}', {new_limit}, {group_id})
+# """
+#         self.con.execute(query)
+#         self.con.commit()
+#         self.appctxt.logger.info(f"Adding 15 minutes to {group_name}."
+#               f"The new limit is {new_limit} min.")
+#         self.appctxt.db.update_config()
+# TODO add ability to increase time limit
 

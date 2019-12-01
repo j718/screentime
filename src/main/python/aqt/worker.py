@@ -31,12 +31,16 @@ class Worker(QRunnable):
     def block_apps(self):
         """ closes blocked apps """
         blocked = self.timer.apply_limits()
+        print(blocked)
         app_list = [x.get_application() for x in self.screen.get_windows()]
-        app_names = [x.get_name() for x in app_list]
+        print(app_list)
         for app in app_list:
             if blocked.app.str.lower().isin([app.get_name().lower()]).any():
                 # self.closer.set_warning(row.title, row.time_limit)
-                self.closer.set_warning(app.get_name(), "")
+
+                row = blocked[blocked.app.str.lower().isin([app.get_name().lower()])]
+                limit = (row.time_limit.iloc[0])
+                self.closer.set_warning(app.get_name(), limit)
                 self.appctxt.logger.info(f"Sending warning for {app.get_name()}")
                 response = self.closer.exec_()
                 if response == 1:
@@ -44,5 +48,5 @@ class Worker(QRunnable):
                     subprocess.call(['notify-send',
                                     f'Closing {app.get_name()}. Time limit reached.'])
                     os.kill(app.get_pid(), signal.SIGKILL)
-                elif response == 2:
-                    self.timer.increase_limit(app.get_name().lower())
+                # elif response == 2:
+                #     self.timer.increase_limit(title)

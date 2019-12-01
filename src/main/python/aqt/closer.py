@@ -13,7 +13,7 @@ class Closer(QtWidgets.QDialog):
 
         # connect buttons
         self.accept_button.clicked.connect(self.accept)
-        self.add_button.clicked.connect(self.add)
+        # self.add_button.clicked.connect(self.add)
 
     def set_warning(self, app_name: str, time: str):
         warning = f"Reached limit of {time}"\
@@ -27,9 +27,9 @@ class Closer(QtWidgets.QDialog):
         """
         self.done(1)
 
-    def add(self):
-        """
-        invoked by clicking the add time button on the dialog.
-            meant to add fifteen minutes until attempting to kill again
-        """
-        self.done(2)
+    # def add(self):
+    #     """
+    #     invoked by clicking the add time button on the dialog.
+    #         meant to add fifteen minutes until attempting to kill again
+    #     """
+    #     self.done(2)

@@ -28,7 +28,7 @@
         <x>0</x>
         <y>0</y>
         <width>371</width>
-        <height>210</height>
+        <height>252</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -56,16 +56,6 @@
      </property>
      <property name="text">
       <string>Accept</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="add_button">
-     <property name="styleSheet">
-      <string notr="true">background-color: rgb(114, 159, 207);</string>
-     </property>
-     <property name="text">
-      <string>Add Time (15 min)</string>
      </property>
     </widget>
    </item>
