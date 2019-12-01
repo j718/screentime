@@ -13,19 +13,15 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>120</x>
-     <y>70</y>
-     <width>67</width>
-     <height>19</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>About</string>
-   </property>
-  </widget>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:18pt;&quot;&gt;Screentime&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Description&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;:&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt; Screentime is used to set limits on the time that different app groups can be opened on your device&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Creator&lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;: Jacob Clarke&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Email: &lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;jacobclarke718@gmail.com&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt; font-weight:600;&quot;&gt;Github: &lt;/span&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;github.com/j718/screentime&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>
