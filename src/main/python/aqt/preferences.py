@@ -16,6 +16,7 @@ class Preferences(QtWidgets.QDialog):
         self.appctxt = appctxt
         self.con = self.appctxt.db.connection
         uic.loadUi(appctxt.get_resource("preferences.ui"), self)
+        self.setWindowTitle("Preferences - Screentime")
 
         # TODO add limit time to limit group line eidt
 
@@ -60,7 +61,9 @@ class Preferences(QtWidgets.QDialog):
                 box.hide()
 
     def get_apps(self):
+        self.appctxt.logger.info(os.environ['XDG_DATA_DIRS'])
         data_dirs = list(set([Path(x) / 'applications' for x in os.environ['XDG_DATA_DIRS'].split(":")]))
+        self.appctxt.logger.info(data_dirs)
         apps = []
         for a in data_dirs:
             if a.exists():

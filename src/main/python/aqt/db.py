@@ -1,7 +1,6 @@
 import sqlite3
 from pathlib import Path
 import pandas as pd
-# TODO add testing mode to cli.py
 
 
 class Database():
@@ -26,7 +25,6 @@ class Database():
             self.connection.close()
             self.flagConnOpen = False
         self.appcxt.logger.info("Closed connection")
-        # TODO add logger to appctxt
 
     def init_db(self):
         self.init_connection()
