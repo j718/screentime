@@ -35,7 +35,7 @@ class Preferences(QtWidgets.QDialog):
             if group:
                 if app.lower() in self.apps:
                     cb.setChecked(True)
-            self.formLayout.addRow(cb)
+            self.formLayout.addWidget(cb)
         self.accept_button.clicked.connect(self.accept)
         self.delete_button.clicked.connect(self.delete)
         self.search_bar.textChanged.connect(self.filter_search_bar)
