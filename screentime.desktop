@@ -1,10 +1,11 @@
 #!/usr/bin/env xdg-open
 [Desktop Entry]
 Version=1.0
-Terminal=false
+Terminal=true
 Type=Application
 Icon=screentime
 Name=Screentime
-Exec=sh -c "/usr/share/screentime/target/screentime/screentime &"
+Exec= /usr/bin/sh -c "pgrep screentime ||  /usr/share/screentime/target/screentime/screentime &"
+
 Comment= ANn app for limiting usage of specific app groups
 

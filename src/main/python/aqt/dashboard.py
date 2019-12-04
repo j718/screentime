@@ -25,4 +25,5 @@ class Dashboard(QtWidgets.QWidget):
     def get_preference_dialog(self, group=None):
         dialog = preferences.Preferences(self.appctxt, group)
         if dialog.exec_() == 1:
+            self.appctxt.db.update_config()
             self.draw()

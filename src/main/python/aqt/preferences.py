@@ -7,6 +7,7 @@ from PyQt5.QtCore import Qt, QVariant
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 import os
 from pathlib import Path
+from aqt import deleter
 
 # get all data dris removing duplicates and checking if they exist
 
@@ -75,7 +76,7 @@ class Preferences(QtWidgets.QDialog):
 
             # TODO add time limit to dashboard widget ubttons
 
-    def delete(self):
+    def remove_group(self):
         if self.group:
             query = f"""
     DELETE FROM limit_group
@@ -84,6 +85,11 @@ class Preferences(QtWidgets.QDialog):
             self.con.execute(query)
             self.con.commit()
         self.done(1)
+
+    def delete(self):
+        dialog = deleter.Delete(self.appctxt)
+        if dialog.exec_():
+            self.remove_group()
 
     def accept(self):
         """
@@ -174,5 +180,4 @@ VALUES ('{app_id}','{group_id}')
 """
             self.con.execute(query)
             self.con.commit()
-        self.appctxt.db.update_config()
         self.done(1)

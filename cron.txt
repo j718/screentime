@@ -1,0 +1,2 @@
+* * * * * /usr/bin/sh -c "export DISPLAY=:0; pgrep screentime || /usr/share/screentime/target/screentime/screentime"
+
