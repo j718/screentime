@@ -19,6 +19,7 @@ fbs = "*"
 gobject = "*"
 pygobject = "*"
 psutil = "*"
+pgrep = "*"
 
 [requires]
 python_version = "3.6.3"
