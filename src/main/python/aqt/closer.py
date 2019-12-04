@@ -9,6 +9,7 @@ class Closer(QtWidgets.QDialog):
         self.app = appctxt.app
         self.form = self.appctxt.get_resource('closer.ui')
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
+        self.setWindowState(Qt.WindowFullScreen)
         uic.loadUi(self.form, self)
 
         # connect buttons

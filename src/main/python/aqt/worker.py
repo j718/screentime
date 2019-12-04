@@ -26,14 +26,14 @@ class Worker(QRunnable):
         while True:
             self.block_apps()
             time.sleep(10)
+            # make sure that tray is showing
             # TODO increase increment based on which is closest to rnning out
+            # TODO finish making tray work on startup
 
     def block_apps(self):
         """ closes blocked apps """
         blocked = self.timer.apply_limits()
-        print(blocked)
         app_list = [x.get_application() for x in self.screen.get_windows()]
-        print(app_list)
         for app in app_list:
             if blocked.app.str.lower().isin([app.get_name().lower()]).any():
                 # self.closer.set_warning(row.title, row.time_limit)
