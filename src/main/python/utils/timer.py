@@ -13,7 +13,6 @@ class Screentime():
     def __init__(self, appctxt):
         self.appctxt = appctxt
         self.root_url = "http://localhost:5600/api/"
-        assert requests.get(self.root_url).ok
         self.con = appctxt.db.connection
         self.bucket = [item for item in requests.get(self.root_url + "0/buckets").json()
                   if 'aw-watcher-window' in item][0]

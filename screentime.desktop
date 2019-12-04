@@ -5,5 +5,7 @@ Terminal=false
 Type=Application
 Icon=screentime
 Name=Screentime
-Exec=sh -c "sleep 10 && /usr/share/screentime/target/screentime/screentime"
+Exec=sh -c "/usr/share/screentime/target/screentime/screentime"
 Comment= ANn app for limiting usage of specific app groups
+X-GNOME-Autostart-Delay=5
+

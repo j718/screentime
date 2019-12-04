@@ -15,6 +15,7 @@ class Closer(QtWidgets.QDialog):
         self.accept_button.clicked.connect(self.accept)
         # self.add_button.clicked.connect(self.add)
 
+# TODO only allow one instance of hte app
     def set_warning(self, app_name: str, time: str):
         warning = f"Reached limit of {time}"\
                     f" minutes for {app_name} today."

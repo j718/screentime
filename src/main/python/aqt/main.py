@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QVBoxLayout, QSystemTrayIcon, QMenu, QAction
 import sys
 from PyQt5 import uic
-from aqt import about, worker, preferences, dashboard, db
+from aqt import about, worker, preferences, dashboard, db, warning
 from PyQt5.QtCore import QThreadPool
 
 
@@ -11,6 +11,7 @@ class ScreentimeQt(QMainWindow):
         self.appctxt = appctxt
         self.app = appctxt.app
         self.app.mw = self
+        self.activity_watch()
         appctxt.db = db.Database(appctxt)
         appctxt.db.update_config()
         self.worker = worker.Worker(appctxt)
@@ -22,6 +23,15 @@ class ScreentimeQt(QMainWindow):
 
         self.setup_mw()
         self.setup_tray()
+
+    def activity_watch(self):
+        """ check if activity watch api is working and quit if not"""
+        import requests
+        root_url = "http://localhost:5600/api/"
+        if not requests.get(root_url).ok:
+            dialog = warning.Warning(self.appctxt)
+            dialog.exec_()
+            sys.exit(0)
 
     def setup_mw(self):
         """
