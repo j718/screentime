@@ -24,7 +24,6 @@ class Worker(QRunnable):
     def run(self):
         while True:
             self.block_apps()
-            self.logger.info("running worker")
             time.sleep(10)
             # TODO increase increment based on which is closest to rnning out
             # TODO finish making tray work on startup
@@ -32,7 +31,6 @@ class Worker(QRunnable):
     def block_apps(self):
         """ closes blocked apps """
         blocked = self.timer.apply_limits()
-        self.logger.debug(blocked)
         for index, row in blocked.iterrows():
             instance = pgrep.pgrep(row.app)
             if instance:

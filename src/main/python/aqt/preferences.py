@@ -7,7 +7,7 @@ from PyQt5.QtCore import Qt, QVariant
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 import os
 from pathlib import Path
-from aqt import deleter
+from aqt import deleter, app
 
 # get all data dris removing duplicates and checking if they exist
 
@@ -19,6 +19,7 @@ class Preferences(QtWidgets.QDialog):
         uic.loadUi(appctxt.get_resource("preferences.ui"), self)
         self.setWindowTitle("Preferences - Screentime")
 
+        self.config = self.appctxt.get_config()
         self.group = group
         if self.group:
             # add time limit to limit group line edit
@@ -29,20 +30,39 @@ class Preferences(QtWidgets.QDialog):
             self.time_limit.setText(str(limit))
 
             # get a list of apps for group
-            self.apps = self.appctxt.config[self.appctxt.config['title'] == group].app.str.lower().tolist()
+            self.apps = self.config[self.config['title'] == group].app.str.lower().tolist()
 
-        for app in self.get_apps():
-            cb = QCheckBox(app, self)
-            if group:
-                if app.lower() in self.apps:
-                    cb.setChecked(True)
-            self.formLayout.addWidget(cb)
+        self.draw_list()
         self.accept_button.clicked.connect(self.accept)
         self.delete_button.clicked.connect(self.delete)
         self.search_bar.textChanged.connect(self.filter_search_bar)
+        self.newapp_button.clicked.connect(self.create_app)
 
     # TODO make added time persist between updates
     # TODO make sure that time is only increased in group that ran out for app
+    def draw_list(self):
+        # remove all buttons
+        for i in reversed(range(self.formLayout.count())):
+            self.formLayout.itemAt(i).widget().setParent(None)
+        # redraw
+        for app in self.get_apps():
+            cb = QCheckBox(app, self)
+            if self.group:
+                if app.lower() in self.apps:
+                    cb.setChecked(True)
+            self.formLayout.addWidget(cb)
+
+    def create_app(self):
+        dialog = app.App(self.appctxt)
+        if dialog.exec_():
+            query = f"""
+INSERT INTO app (title)
+VALUES ('{dialog.app_lineEdit.text()}');
+"""
+            self.con.execute(query)
+            self.con.commit()
+            self.draw_list()
+
     def filter_search_bar(self):
         filter = self.search_bar.text().lower()
 
@@ -53,25 +73,15 @@ class Preferences(QtWidgets.QDialog):
             else:
                 box.hide()
 
+# TODO update schema to delete apps limit_items when a group is deleted
+# TODO make a way to manage apps
+# TODO give multiple properties to apps
+# TODO update connection approach
     def get_apps(self):
-        home = os.environ['HOME']
-        data_dirs = list(set((home + "/.local/share/flatpak/exports/share/"
-                                ":/var/lib/flatpak/exports/share/"
-                                ":/usr/local/share/:/usr/share/"
-                                ":/var/lib/snapd/desktop:"
-                                + os.environ['XDG_DATA_DIRS']).split(':')))
-
-        data_dirs = [Path(x) / 'applications' for x in data_dirs]
-        apps = []
-        for a in data_dirs:
-            if a.exists():
-                for b in a.iterdir():
-                    text = b.read_text().splitlines()
-                    if "NoDisplay=true" not in text:
-                        for c in text:
-                            if "Name=" in c:
-                                apps.append(c.split("Name=")[1])
-        apps = list(set(apps))
+        query = """
+select title from app
+"""
+        apps = [app for app, in self.con.execute(query)]
         return apps
 
             # TODO add time limit to dashboard widget ubttons

@@ -45,4 +45,4 @@ JOIN APP ON
     APP.ID = LIMIT_ITEM.APP_ID"""
         config = pd.read_sql_query(query, self.connection)
         config.app = config.app.str.lower()
-        self.appctxt.config = config
+        self.appctxt.set_config(config)

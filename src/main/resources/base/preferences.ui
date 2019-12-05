@@ -29,6 +29,13 @@
     </layout>
    </item>
    <item>
+    <widget class="QPushButton" name="newapp_button">
+     <property name="text">
+      <string>New App</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QScrollArea" name="scrollArea">
      <property name="widgetResizable">
       <bool>true</bool>
@@ -39,7 +46,7 @@
         <x>0</x>
         <y>0</y>
         <width>784</width>
-        <height>452</height>
+        <height>410</height>
        </rect>
       </property>
       <layout class="QFormLayout" name="formLayout_2">

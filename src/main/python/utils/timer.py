@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 """Main module."""
-import yaml
 import requests
 from datetime import datetime
 from dateutil.parser import parse
 from pandas.io.json import json_normalize
 import pandas as pd
 
+# TODO update install process to pause cron
 
 class Screentime():
     def __init__(self, appctxt):
@@ -41,16 +41,18 @@ class Screentime():
 
     def apply_limits(self):
         # manage config file
+        config = self.appctxt.get_config()
         df_times = self.get_times()
-        df_master = pd.DataFrame.merge(self.appctxt.config, df_times, how="left")
+        df_master = pd.DataFrame.merge(config, df_times, how="left")
         df_groups = (df_master
                     .groupby(["title"]).agg(
                         duration=('duration', 'sum'),
                         time_limit=('time_limit', 'max')
                     )
                     .reset_index()
-                    .merge(self.appctxt.config[['title', 'app']], how='left')
+                    .merge(config[['title', 'app']], how='left')
                     )
+
 
         df_groups = df_groups[df_groups.time_limit <= df_groups.duration]
         return df_groups
