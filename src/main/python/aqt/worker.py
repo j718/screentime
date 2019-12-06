@@ -43,3 +43,4 @@ class Worker(QRunnable):
                                     f'Closing {row.app}. Time limit reached.'])
                     for pid in instance:
                         os.kill(pid, signal.SIGKILL)
+                        # TODO show current progress on usage of a category

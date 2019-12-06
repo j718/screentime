@@ -30,6 +30,16 @@
      <item row="1" column="1">
       <widget class="QLineEdit" name="app_lineEdit"/>
      </item>
+     <item row="2" column="1">
+      <widget class="QCheckBox" name="add_current_check">
+       <property name="text">
+        <string>Add to current Group</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>

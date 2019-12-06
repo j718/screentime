@@ -9,6 +9,7 @@ class App(QtWidgets.QDialog):
         self.appctxt = appctxt
         self.app = appctxt.app
         self.form = self.appctxt.get_resource('app.ui')
+        self.con = self.appctxt.db.connection
         uic.loadUi(self.form, self)
 
         # connect buttons
@@ -21,6 +22,12 @@ class App(QtWidgets.QDialog):
         invoked by clicking the accept button of the dialog.i
             meant to close app in question
         """
+        query = f"""
+INSERT INTO app (title)
+VALUES ('{self.app_lineEdit.text()}');
+"""
+        self.con.execute(query)
+        self.con.commit()
         self.done(1)
 
     def cancel(self):

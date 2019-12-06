@@ -55,13 +55,13 @@ class Preferences(QtWidgets.QDialog):
     def create_app(self):
         dialog = app.App(self.appctxt)
         if dialog.exec_():
-            query = f"""
-INSERT INTO app (title)
-VALUES ('{dialog.app_lineEdit.text()}');
-"""
-            self.con.execute(query)
-            self.con.commit()
+            if dialog.add_current_check.isChecked():
+                self.apps.append(dialog.app_lineEdit.text())
             self.draw_list()
+                # (cb.setChecked(True)
+                #     for cb in
+                #     [self.formLayout.itemAt(i).widget() for i in range(self.formLayout.count())]
+                #     if cb.text() == dialog.app_lineEdit.text())
 
     def filter_search_bar(self):
         filter = self.search_bar.text().lower()
